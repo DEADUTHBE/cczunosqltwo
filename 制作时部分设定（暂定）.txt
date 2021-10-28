@@ -1,0 +1,5 @@
+1.使用mongodb存储数据
+2.平台后端使用java
+3.制作过程中测试先以固定句子如：常州大学人工智能大数据学院
+4.分词功能实现使用结巴分词，CSDN：https://blog.csdn.net/haishu_zheng/article/details/80430106
+                            github：https://github.com/huaban/jieba-analysis
