@@ -5,7 +5,7 @@ from lxml import etree
 import pymongo
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["hot"]
-mycol = mydb["zhihu"]
+mycol = mydb["bili"]
 mycol.drop()
 
 url='https://tophub.today/'
@@ -18,10 +18,10 @@ response = requests.get(url, headers=headers,verify=False)
 #print(response.text) 
 html=etree.HTML(response.text)
 #datas=html.xpath('//*[@id="pl_top_realtimehot"]/table/tbody/tr')
-datas=html.xpath('//*[@id="node-6"]/div/div[2]/div[1]/a/div')
+datas=html.xpath('//*[@id="node-19"]/div/div[2]/div[1]/a/div')
 
 mylist=[]
-for i in range(50):
+for i in range(100):
     dicty = {'_id': 'a','热搜排名': 'b', '热搜标题': 'q', '热搜点击量': 'w', '热搜地址': 'e'}
     mylist.append(dicty)
 
@@ -29,7 +29,7 @@ for i,data in enumerate(datas): #循环多次提取
     data_rank=''.join(data.xpath('span[1]/text()')) #热搜标题
     data_title=''.join(data.xpath('span[2]/text()')) #热搜排名
     data_num=''.join(data.xpath('span[3]/text()')) #热搜点击量
-    data_url=''.join(data.xpath('//*[@id="node-6"]/div/div[2]/div[1]/a[4]/@href'))
+    data_url=''.join(data.xpath('//*[@id="node-19"]/div/div[2]/div[1]/a[4]/@href'))
     mylist[i]['_id']=i+1
     mylist[i]['热搜排名']=data_rank
     mylist[i]['热搜标题']=data_title
@@ -41,7 +41,7 @@ for i,data in enumerate(datas): #循环多次提取
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["hot"] #数据库名
-mycol = mydb["zhihu"] #集合名
+mycol = mydb["bili"] #集合名
 x = mycol.insert_many(mylist)
 # 输出插入的所有文档对应的 _id 值
 #print(x.inserted_ids)  
