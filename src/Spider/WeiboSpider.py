@@ -1,3 +1,4 @@
+import time
 import requests
 import pymongo
 import json
@@ -7,14 +8,12 @@ import json
 :Author:    iWorld
 :Create:    2021/11/19 15:30
 :GitHub:    https://github.com/DEADUTHBE/cczunosqltwo
-
+:Abstract:  微博爬虫, 通过request库以get方式获取微博热搜的JSON
 """
 
 
-class weiboSpider:
+class WeiboSpider:
     '''
-    通过request库以get方式获取微博热搜的JSON
-
     返回的数据结构:
     {
         "ok": 1,
@@ -64,21 +63,23 @@ class weiboSpider:
     '''
 
     def __init__(self):
-        self.myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-        self.mydb = self.myclient["hotSearch"]
-        self.mycol = self.mydb["weibo"]
-        self.mycol.drop()
+        self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
+        self.myDB = self.myClient["hotSearch"]
+        self.myCol = self.myDB["weibo"]
+        self.myCol.drop()
         self.url = "https://weibo.com/ajax/statuses/hot_band"
         self.headers = {
             'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36"
         }
 
-    def getHotSearch(self):
-        req = requests.get(self.url)
+    def getWeiboHot(self):
+        req = requests.get(self.url, headers=self.headers)
         hotSearch = req.text
         hotSearch = json.loads(hotSearch)
         hotSearch = hotSearch["data"]["band_list"]
-
+        # hotSearch["timestamp"] = time.time()
+        # hotSearch = json.dumps(hotSearch)
         # 存入MongoDB
         for item in hotSearch:
-            self.mycol.insert_one(item)
+            item["timestamp"] = time.time()
+            self.myCol.insert_one(item)

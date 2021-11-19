@@ -1,12 +1,15 @@
-from src.Spider import weiboSpider
+from src.Spider import WeiboSpider
+from src.Spider import ZhiHuSpider
 
 """
 
 :Author:    iWorld
 :Create:    2021/11/19 15:30
 :GitHub:    https://github.com/DEADUTHBE/cczunosqltwo
-
+:Abstract:  在此调用所有的爬虫
 """
 if __name__ == "__main__":
-    spider = weiboSpider()
-    spider.getHotSearch()
+    weiboSpider = WeiboSpider()
+    weiboSpider.getWeiboHot()
+    zhiHuSpider = ZhiHuSpider.ZhiHuSpider()
+    zhiHuSpider.getZhiHuHot()
