@@ -7,5 +7,5 @@
 
 `.\src`: 项目代码目录
 
-`.\requirement.txt`: Python环境依赖包, 执行`python.exe -m pip install -r .\requirements.txt`即可自动安装. 
+`.\requirement.txt`: Python环境依赖包, 执行`python -m pip install -r .\requirements.txt`即可自动安装. 
 
