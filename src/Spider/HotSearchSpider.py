@@ -1,5 +1,6 @@
 from src.Spider import WeiboSpider
 from src.Spider import ZhiHuSpider
+from src.Spider import BilibiliSpider
 
 """
 
@@ -11,5 +12,7 @@ from src.Spider import ZhiHuSpider
 if __name__ == "__main__":
     weiboSpider = WeiboSpider()
     weiboSpider.getWeiboHot()
-    zhiHuSpider = ZhiHuSpider.ZhiHuSpider()
+    zhiHuSpider = ZhiHuSpider()
     zhiHuSpider.getZhiHuHot()
+    bilibiliSpider = BilibiliSpider()
+    bilibiliSpider.getBilibiliHot()
