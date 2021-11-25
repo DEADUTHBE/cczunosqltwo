@@ -5,46 +5,45 @@ import json
 
 """
 :Author:    iWorld
-:Create:    2021/11/19 16:34
+:Create:    2021/11/25 21:10
 :GitHub:    https://github.com/DEADUTHBE/cczunosqltwo
-:Abstract:  知乎热榜爬虫
+:Abstract:  Bilibili热榜爬虫
 """
 
 
-class ZhiHuSpider:
+class BilibiliSpider:
     def __init__(self):
         self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
         self.myDB = self.myClient["hotSearch"]
-        self.myCol = self.myDB["ZhiHu"]
+        self.myCol = self.myDB["Bilibili"]
         self.myCol.drop()
-        self.url = "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&mobile=true"
-        self.questionUrl = "https://www.zhihu.com/question/{}"
+        self.url = "https://api.bilibili.com/x/web-interface/ranking/v2?rid=0&type=all"
         self.headers = {
             'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) " +
                           "AppleWebKit/605.1.15 (KHTML, like Gecko) " +
                           "Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.45"
         }
 
-    def getZhiHuHot(self):
+    def getBilibiliHot(self):
         req = requests.get(self.url, headers=self.headers)
         hotSearch = req.text
         hotSearch = json.loads(hotSearch)
-        hotSearch = hotSearch["data"]
+        hotSearch = hotSearch["data"]["list"]
 
         hotDict = {}
         rank = 0
         for hot in hotSearch:
             hotDict.clear()
             # 热搜词
-            hotDict["word"] = hot["target"]["title"]
+            hotDict["word"] = hot["title"]
             # 热度指数
-            hotDict["num"] = hot["detail_text"]
+            hotDict["num"] = hot["score"]
             # 预览文案
-            hotDict["text"] = hot["target"]["excerpt"]
+            hotDict["text"] = hot["desc"]
             # 预览图url
-            hotDict["previewPicUrl"] = hot["children"][0]["thumbnail"]
+            hotDict["previewPicUrl"] = hot["pic"]
             # 问题详情页url
-            hotDict["questionUrl"] = self.questionUrl.format(hot["target"]["id"])
+            hotDict["questionUrl"] = hot["short_link"]
             # 问题排名
             hotDict["rank"] = rank
             # 时间戳
@@ -52,4 +51,4 @@ class ZhiHuSpider:
             # 存入MongoDB
             self.myCol.insert_one(hotDict)
             rank += 1
-        print(f"知乎\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")
+        print(f"Bilibili\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")

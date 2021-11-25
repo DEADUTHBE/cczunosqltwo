@@ -83,3 +83,4 @@ class WeiboSpider:
         for item in hotSearch:
             item["timestamp"] = time.time()
             self.myCol.insert_one(item)
+        print(f"微博\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")
