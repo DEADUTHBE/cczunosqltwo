@@ -11,6 +11,7 @@ import java.util.List;
  * @Author darkgreen
  * @Date 2021/11/15 15:05
  */
+@Deprecated
 public interface Search {
     List<User> search(String key);
 }

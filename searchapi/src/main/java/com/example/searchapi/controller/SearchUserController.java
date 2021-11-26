@@ -17,6 +17,7 @@ import java.util.List;
  * @Author darkgreen
  * @Date 2021/11/15 14:13
  */
+@Deprecated
 @RestController
 public class SearchUserController {
     @Autowired

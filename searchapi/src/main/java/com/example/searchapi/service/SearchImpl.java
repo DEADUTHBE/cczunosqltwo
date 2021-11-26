@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
  * @Author darkgreen
  * @Date 2021/11/15 14:14
  */
+@Deprecated
 @Service("searchImpl")
 public class SearchImpl implements Search {
     @Autowired
@@ -73,10 +74,6 @@ public class SearchImpl implements Search {
                 allUser.add(user);
             }
         }
-        System.out.println(users1.size());
-        System.out.println(users2.size());
-        System.out.println(users3.size());
-        System.out.println(allUser.size());
 
         return allUser;
     }

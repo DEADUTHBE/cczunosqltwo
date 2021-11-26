@@ -4,3 +4,9 @@
 点击后就会返回与之相关的json对象组
 ![img.png](img.png)
 ![img_1.png](img_1.png)
+
+
+
+
+
+新版接口 /search/{key}/{page}

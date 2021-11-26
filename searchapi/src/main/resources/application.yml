@@ -2,6 +2,6 @@ spring:
   data:
     mongodb:
       database: zhihu
-      host: 127.0.0.1
-      port: 27017
+      host: 121.5.146.33
+      port: 27000
 
