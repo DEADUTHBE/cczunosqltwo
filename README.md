@@ -3,9 +3,11 @@
 
 # 项目文件框架解释
 
-`.\resource`: 存放项目所需资源, 如图片, zip, 数据集之类
+`.\browser`: 前端代码
 
-`.\src`: 项目代码目录
+`.\server`: 后端代码
+
+`.\resource`: 存放项目所需资源, 如图片, zip, 数据集之类
 
 `.\requirement.txt`: Python环境依赖包, 执行`python -m pip install -r .\requirements.txt`即可自动安装. 
 
