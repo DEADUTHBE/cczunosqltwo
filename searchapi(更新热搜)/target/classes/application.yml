@@ -1,7 +1,0 @@
-spring:
-  data:
-    mongodb:
-      database: zhihu
-      host: 121.5.146.33
-      port: 27000
-
