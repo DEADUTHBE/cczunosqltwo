@@ -84,9 +84,9 @@ public class HotSearchController {
 //        thanked_count: 735
 //        url_token: "ggff-ss"
 //        user_type: "people"
-//        voteup_count: 4884 投票计数
-        String[] Scopes=new String[]{"description","headline","educations.major.name"};//根据前端定义
-        return hotSearchService.hotSearchbyScope(keyword,page,Scopes,"voteup_count");
+//        voteup_count: 4884
+        String[] Scopes=new String[]{"description","headline","educations.major.name"};
+        return hotSearchService.search1(keyword,page,Scopes);
     }
 
 }
