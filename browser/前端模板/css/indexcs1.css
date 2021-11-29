@@ -1,0 +1,137 @@
+body,ul,input,img,button,form{
+    margin: 0;
+    padding: 0;
+}
+#tq{
+    background: #cccccc2d;
+    text-align:left;
+}
+iframe{
+    margin-left:30px;
+}
+#main{
+    background: #cccccc2d;
+}
+
+#logo{
+    height: 130px;
+    text-align:center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    background: #cccccc2d;
+}
+#inputwrapper{
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    background: #cccccc2d;
+    text-align:center;
+    padding-top: 30px;
+    padding-bottom: 5px;
+}
+input{
+    font-size: xx-large;
+    border-radius:10px;
+    margin-top: 5px;
+    border:3px solid #0808086c;
+    /* color:#d4d6da; */
+}
+button{
+    text-decoration:none;
+    margin-left: 10px;
+	background:#336633;
+	color:#f2f2f2;
+	padding: 10px 30px 10px 30px;
+	font-size:16px;
+	font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+	font-weight:bold;
+	border-radius:10px;
+	-webkit-transition:all linear 0.30s;
+	-moz-transition:all linear 0.30s;
+	transition:all linear 0.30s;
+}
+button:hover { background: #33CC33; }
+#container{
+    display: flex;
+    justify-content: space-between;
+    height: 373px;
+    background-color:  #cccccc2d;
+}
+#title{
+    margin: 0px;
+    height: 50px;
+    background:#336633;
+}
+#menu{
+    position: relative;
+    margin-left:590px; 
+    margin-top:20px;
+    width:400px;
+    height:30px;
+    border:3px solid #336633;
+    border-radius:8px 8px 1px 1px ;
+    background-color: #336633;
+    float:left;
+}
+
+#container a{
+    font-size: large;
+    font-weight: 500;
+    text-decoration:none; 
+    color: blue;
+}
+#container a:visited {color:purple;}
+#container a:hover { background: #33CC33; color:white;}
+#left_url{
+    height: 300px; 
+    width: 5%;
+    margin-left: 1%;
+    position: fixed; /*固定*/
+    top: 20%;/*离顶部的距离*/
+    margin-bottom: 5px;
+    text-align:center;
+   
+}
+#left_url img{
+    height: auto; 
+    width: 60%; 
+    margin-top: 20px;
+    margin-left:20px;
+}
+#week{
+    float:left;
+    padding-right:60px;
+    padding-left:10px;
+    padding-top:2px;
+    cursor: pointer;
+}
+#month{
+    float:left;
+    padding-right:60px;
+    padding-top:2px;
+    cursor: pointer;
+}
+#year{
+    float:left;
+    padding-top:2px;
+    cursor: pointer;
+}
+#menu i{
+    font-style: normal;
+    font-size: 18px;
+    color:white;
+}
+#w{
+    float:left;
+    padding-top:10px;
+    padding-right:40px;
+}
+#m{
+    float:left;
+    padding-top:10px;
+    padding-right:40px;
+}
+#y{
+    float:left;
+    padding-top:10px;
+}
