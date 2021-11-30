@@ -1,6 +1,6 @@
-import WeiboSpider
-import ZhiHuSpider
-import BilibiliSpider
+from WeiboSpider import WeiboSpider
+from ZhiHuSpider import ZhiHuSpider
+from BilibiliSpider import BilibiliSpider
 
 """
 

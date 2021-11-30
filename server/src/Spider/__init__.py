@@ -1,6 +1,6 @@
-from server.src.Spider.WeiboSpider import WeiboSpider
-from server.src.Spider.ZhiHuSpider import ZhiHuSpider
-from server.src.Spider.BilibiliSpider import BilibiliSpider
+from WeiboSpider import WeiboSpider
+from ZhiHuSpider import ZhiHuSpider
+from BilibiliSpider import BilibiliSpider
 """
 :Author:    iWorld
 :Create:    2021/11/19 15:30
