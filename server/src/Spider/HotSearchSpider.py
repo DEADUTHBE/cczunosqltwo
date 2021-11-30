@@ -1,6 +1,6 @@
-from src.Spider import WeiboSpider
-from src.Spider import ZhiHuSpider
-from src.Spider import BilibiliSpider
+import WeiboSpider
+import ZhiHuSpider
+import BilibiliSpider
 
 """
 
