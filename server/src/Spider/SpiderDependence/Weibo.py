@@ -1,7 +1,8 @@
+import json
 import time
 import requests
-import pymongo
-import json
+from urllib.parse import quote
+from SpiderRootClass import Spider
 
 """
 
@@ -12,7 +13,7 @@ import json
 """
 
 
-class WeiboSpider:
+class WeiboSpider(Spider):
     '''
     返回的数据结构:
     {
@@ -63,24 +64,34 @@ class WeiboSpider:
     '''
 
     def __init__(self):
-        self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
-        self.myDB = self.myClient["hotSearch"]
-        self.myCol = self.myDB["weibo"]
-        self.myCol.drop()
+        super().__init__("WeiBo")
         self.url = "https://weibo.com/ajax/statuses/hot_band"
-        self.headers = {
-            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36"
-        }
+        self.detail = "https://s.weibo.com/weibo?q=%23{}%23"
 
     def getWeiboHot(self):
         req = requests.get(self.url, headers=self.headers)
         hotSearch = req.text
         hotSearch = json.loads(hotSearch)
         hotSearch = hotSearch["data"]["band_list"]
-        # hotSearch["timestamp"] = time.time()
-        # hotSearch = json.dumps(hotSearch)
-        # 存入MongoDB
-        for item in hotSearch:
-            item["timestamp"] = time.time()
-            self.myCol.insert_one(item)
+        rank = 0
+        for hot in hotSearch:
+            self.__hot.clear()
+            # 热搜词
+            self.__hot["word"] = hot["word"]
+            # 热度指数
+            self.__hot["num"] = hot["num"]
+            # 预览文案
+            self.__hot["text"] = hot["mblog"]["text"]
+            # 预览图url
+            self.__hot["picUrl"] = hot["mblog"]["page_info"]["page_pic"]
+            # 问题详情页url
+            self.__hot["detailUrl"] = self.detail.format(quote(hot["word"]))
+            # 问题排名
+            self.__hot["rank"] = rank
+            # 时间戳
+            self.__hot["timestamp"] = time.time()
+            # 存入MongoDB
+            self.myCol.insert_one(self.__hot)
+
+            rank += 1
         print(f"微博\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")

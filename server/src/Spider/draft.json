@@ -1,0 +1,75 @@
+{
+    "_id": {
+        "$oid": "619f8efebd81fcac9281f9e9"
+    },
+    "is_new": 1,
+    "star_word": 0,
+    "word": "浙江1例无症状为浙大教职工",
+    "category": "社会新闻,教育",
+    "num": 1440535,
+    "subject_querys": "",
+    "flag": 1,
+    "icon_desc": "新",
+    "raw_hot": 1440535,
+    "note": "浙江1例无症状为浙大教职工",
+    "emoticon": "",
+    "ad_info": "",
+    "icon_desc_color": "#ff3852",
+    "realpos": 1,
+    "topic_flag": 1,
+    "mid": "4707512734977316",
+    "fun_word": 0,
+    "onboard_time": 1637843786,
+    "rank": 0,
+    "mblog": {
+        "text": "<a href=\"//s.weibo.com/weibo?q=%23%E6%B5%99%E5%A4%A7%E7%B4%AB%E9%87%91%E6%B8%AF%E6%A0%A1%E5%8C%BA%E5%B0%81%E9%97%AD%E7%AE%A1%E7%90%86%23\" target=\"_blank\">#浙大紫金港校区封闭管理#</a>【<a href=\"//s.weibo.com/weibo?q=%23%E6%B5%99%E6%B1%9F1%E4%BE%8B%E6%97%A0%E7%97%87%E7%8A%B6%E4%B8%BA%E6%B5%99%E5%A4%A7%E6%95%99%E8%81%8C%E5%B7%A5%23\" target=\"_blank\">#浙江1例无症状为浙大教职工#</a>】11月25日下午，学校接杭州市疾控中心通报，浙江大学紫金港校区发现外地疫情关联病例。该病例为浙大艺术与考古博物馆教职工，家住河滨之城小区，11月20日曾与上海确诊病例在苏州有密切接触史，22日晚返杭，23日至24日在艺术与考古博物馆上班， ​​​ ...",
+        "pic_ids": [
+            "002TLsr9ly1gwrnh6cgfmj60go0go77e02"
+        ],
+        "pic_num": 1,
+        "url_struct": [
+            {
+                "url_title": "网页链接",
+                "url_type_pic": "http://h5.sinaimg.cn/upload/2015/09/25/3/timeline_card_small_web.png",
+                "ori_url": "https://content-static.cctvnews.cctv.com/snow-book/index.html?toc_style_id=feeds_default&share_to=wechat&item_id=13208726296226808332&track_id=666A2C71-548F-4FEE-B6F3-4C9CAC1398A2_659535250586",
+                "short_url": "http://t.cn/A6x6XHfF",
+                "long_url": "https://content-static.cctvnews.cctv.com/snow-book/index.html?toc_style_id=feeds_default&share_to=wechat&item_id=13208726296226808332&track_id=666A2C71-548F-4FEE-B6F3-4C9CAC1398A2_659535250586",
+                "url_type": 0,
+                "result": true,
+                "actionlog": {
+                    "act_type": 1,
+                    "act_code": 300,
+                    "oid": "",
+                    "uuid": "",
+                    "cardid": "",
+                    "lcardid": "",
+                    "uicode": "",
+                    "luicode": "",
+                    "fid": "",
+                    "lfid": "",
+                    "ext": "mid:4707512734977316|rid:12_0_0_5053162640177756579_0_0_0|short_url:http://t.cn/A6x6XHfF|long_url:https://content-static.cctvnews.cctv.com/snow-book/index.html?toc_style_id=feeds_default&share_to=wechat&item_id=13208726296226808332&track_id=666A2C71-548F-4FEE-B6F3-4C9CAC1398A2_659535250586|comment_id:|miduid:2656274875|rootmid:4707512734977316|rootuid:2656274875|authorid:|uuid:|is_ad_weibo:0|analysis_card:url_struct"
+                },
+                "storage_type": "",
+                "hide": 0,
+                "position": 2,
+                "need_save_obj": 1,
+                "log": "su=A6x6XHfF&mark=&mid=4707512734977316"
+            }
+        ],
+        "topic_struct": [
+            {
+                "title": "",
+                "topic_url": "sinaweibo://searchall?containerid=231522&q=%23%E6%B5%99%E5%A4%A7%E7%B4%AB%E9%87%91%E6%B8%AF%E6%A0%A1%E5%8C%BA%E5%B0%81%E9%97%AD%E7%AE%A1%E7%90%86%23&extparam=%23%E6%B5%99%E5%A4%A7%E7%B4%AB%E9%87%91%E6%B8%AF%E6%A0%A1%E5%8C%BA%E5%B0%81%E9%97%AD%E7%AE%A1%E7%90%86%23",
+                "topic_title": "浙大紫金港校区封闭管理",
+                "is_invalid": 0
+            },
+            {
+                "title": "",
+                "topic_url": "sinaweibo://searchall?containerid=231522&q=%23%E6%B5%99%E6%B1%9F1%E4%BE%8B%E6%97%A0%E7%97%87%E7%8A%B6%E4%B8%BA%E6%B5%99%E5%A4%A7%E6%95%99%E8%81%8C%E5%B7%A5%23&extparam=%23%E6%B5%99%E6%B1%9F1%E4%BE%8B%E6%97%A0%E7%97%87%E7%8A%B6%E4%B8%BA%E6%B5%99%E5%A4%A7%E6%95%99%E8%81%8C%E5%B7%A5%23",
+                "topic_title": "浙江1例无症状为浙大教职工",
+                "is_invalid": 0
+            }
+        ]
+    },
+    "timestamp": 1637846782.5838318
+}
