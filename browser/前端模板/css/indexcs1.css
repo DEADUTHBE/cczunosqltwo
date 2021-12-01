@@ -63,15 +63,18 @@ button:hover { background: #33CC33; }
     background:#336633;
 }
 #menu{
-    position: relative;
-    margin-left:590px; 
-    margin-top:20px;
+    /* position: relative; */
+    /* margin-left:590px;  */
+    /* margin-top:20px; */
+    display: block;
+    margin: auto;
+    margin-top: 0%;
     width:400px;
     height:30px;
     border:3px solid #336633;
     border-radius:8px 8px 1px 1px ;
     background-color: #336633;
-    float:left;
+    /* float:left; */
 }
 
 #container a{
