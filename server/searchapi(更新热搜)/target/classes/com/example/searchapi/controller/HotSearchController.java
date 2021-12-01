@@ -2,21 +2,25 @@ package com.example.searchapi.controller;
 
 import com.example.searchapi.service.HotSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 public class HotSearchController {
     @Autowired
     private HotSearchService hotSearchService;
 
     @GetMapping("/hot")
-    public List<Map<String, Object>> hotsearch(@RequestParam String keyword,@RequestParam(required = false,defaultValue = "1") Integer page) throws IOException {
+    @ResponseBody
+    public List<Map<String,Object>> hotsearch(@RequestParam String keyword,@RequestParam(required = false,defaultValue = "1") String page) throws IOException {
 //        answer_count: 1477
 //        articles_count: 19
 //        avatar_url: "https://pic4.zhimg.com/7110e47e9674568d087befc770575b54_is.jpg"
@@ -84,9 +88,21 @@ public class HotSearchController {
 //        thanked_count: 735
 //        url_token: "ggff-ss"
 //        user_type: "people"
-//        voteup_count: 4884
-        String[] Scopes=new String[]{"description","headline","educations.major.name"};
-        return hotSearchService.search1(keyword,page,Scopes);
+//        voteup_count: 4884 投票计数
+        String[] Scopes=new String[]{"description","headline","name"};//根据前端定义
+        return hotSearchService.hotSearchbyScope(keyword,page,Scopes,"answer_count");
     }
+@GetMapping("/search")
+    public ModelAndView hotsearch2(@RequestParam String keyword, @RequestParam(required = false,defaultValue = "1") String page) throws IOException {
+        keyword=URLEncoder.encode(keyword, "utf-8");
+    page =URLEncoder.encode(page, "utf-8");
+        ModelAndView modelAndView=new ModelAndView("redirect:/second.html?keyword="+keyword+"&page="+page);
+        return modelAndView;
+    }
+//    @GetMapping("/second")
+//    public String second(@RequestParam String keyword, @RequestParam(required = false,defaultValue = "1") Integer page) throws IOException {
+//
+//        return "second";
+//    }
 
 }

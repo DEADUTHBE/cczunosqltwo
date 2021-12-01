@@ -23,7 +23,7 @@ public class ElasticSearchController {
     @Autowired
     private ElasticService elasticService;
 
-    @GetMapping("/search")
+    @GetMapping("/search1")
     public List<Map<String,Object>> search(@RequestParam("key") String key, @RequestParam(value = "page",defaultValue = "0") int page, HttpServletResponse resp) throws IOException {
         int num = (int) elasticService.getResultNum(key);
         Integer pageNum = (int)Math.ceil(num/20.0);
