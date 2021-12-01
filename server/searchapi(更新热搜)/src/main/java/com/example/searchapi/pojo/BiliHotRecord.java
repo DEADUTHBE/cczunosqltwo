@@ -1,0 +1,22 @@
+package com.example.searchapi.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class BiliHotRecord {
+    String _id;
+    String word;
+    String num;
+    String text;
+    String previewPicUrl;
+    String questionUrl;
+    String rank;
+    String timestamp;
+}
