@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/二级.css">
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script>
+	$(function(){
+    $(window).scroll(function(){  //只要窗口滚动,就触发下面代码 
+        var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度 
+        if( scrollt >200 ){  //判断滚动后高度超过200px,就显示  
+            $("#back_top").fadeIn(400); //淡出     
+        }else{      
+            $("#back_top").stop().fadeOut(400); //如果返回或者没有超过,就淡入.必须加上stop()停止之前动画,否则会出现闪动   
+        }
+    });
+    $("#back_top").click(function(){ //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+            $("html,body").animate({scrollTop:"0px"},200);
+    });
+	});
+</script>
+	<script>
+		function getQueryVariable(variable){
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i=0;i<vars.length;i++) {
+				var pair = vars[i].split("=");
+				if(pair[0] == variable){return decodeURI(pair[1]);}
+			}
+			return(false);
+		}
+		$(function() {
+			window.onload = function () {
+				//知者热榜模块
+				$.ajax({
+					url : "/hotdata",
+					type : "get" ,
+					dataType : "json" ,
+					success : function(json){
+						var map=new Map();
+						for(i=0;i<10;i++){
+							map.set(json[0].bili[i].questionUrl+","+json[0].bili[i].word,parseInt(json[0].bili[i].num))
+						}
+						for(var j=0;j<10;j++){
+							map.set(json[0].zhihu[j].questionUrl+","+json[0].zhihu[j].word,parseInt(json[0].zhihu[j].num)*10000)
+						}
+						// for(var k=0;k<10;k++){
+						// 	map.set(json[0].weibo[k].questionUrl+","+json[0].weibo[k].word,parseInt(json[0].weibo[k].num))
+						// } 微博数据有误，等待数据库更新后再取消注释
+						var sortArray=Array.from(map);
+						sortArray.sort(function(a, b){return b[1] - a[1]});
+						for(i=1;i<=10;i++){
+							if(i==1){
+								$(".trending_tab").append("<div" +
+										" class = \"inner\">" +
+										"<div" +
+										" class = \"point\">"+ i +"</div>" +
+										"<div class=\"content\">" +
+										"<a href=\""+sortArray[i-1][0].split(",")[0]+"\">"+sortArray[i-1][0].split(",")[1]+"</a>" +
+										"</div>" +
+										"</div>")
+							}
+							else if(i==2)
+							$(".trending_tab").append("<div" +
+									" class = \"inner\">" +
+									"<div" +
+									" class = \"point\" style='color: orange;'>"+ i +"</div>" +
+									"<div class=\"content\">" +
+									"<a href=\""+sortArray[i-1][0].split(",")[0]+"\">"+sortArray[i-1][0].split(",")[1]+"</a>" +
+									"</div>" +
+									"</div>")
+							else if(i==3)
+							{
+								$(".trending_tab").append("<div" +
+										" class = \"inner\">" +
+										"<div" +
+										" class = \"point\" style='color: yellow;'>"+ i +"</div>" +
+										"<div class=\"content\">" +
+										"<a href=\""+sortArray[i-1][0].split(",")[0]+"\">"+sortArray[i-1][0].split(",")[1]+"</a>" +
+										"</div>" +
+										"</div>")
+							}
+							else $(".trending_tab").append("<div" +
+									" class = \"inner\">" +
+									"<div" +
+									" class = \"point\" style=\"color: rgba(0, 181, 0, 0.5);\">"+ i +"</div>" +
+									"<div class=\"content\">" +
+										"<a href=\""+sortArray[i-1][0].split(",")[0]+"\">"+sortArray[i-1][0].split(",")[1]+"</a>" +
+									"</div>" +
+									"</div>")
+						}
+
+
+					}
+				})
+
+				if(getQueryVariable("page")==false){
+					var page=1;
+				}else{
+					var page=getQueryVariable("page");
+				}
+				if(getQueryVariable("keyword")==false){
+					alert("搜索内容为空！")
+				}
+				document.getElementsByTagName("input")[0].value = getQueryVariable("keyword");
+				$.ajax({
+					url: "/hot?keyword=" + getQueryVariable("keyword")+"&page="+page,
+					type: "get",
+					dataType: "json",
+					success: function (json) {
+						for(i=0;i<20;i++){
+						$(".result").append("<li className = \"res-list\" data - lazyload = \"1\" > <h3 className = \"res-title\">" +
+								"<a href = \""+json[i].avatar_url+"\" target = \"_blank\" >"+json[i].name+"  回复数:"+json[i].answer_count+"</a>" +
+								"</h3>"+
+								"<div className=\"res-rich res-movie clearfix\">" +
+								"<div>" +
+								"<div>" +
+								"<div>" +
+								"<img className=\"c-img c-img3 c-img-radius-large\"" +
+								" src=\""+json[i].avatar_url+"\"" +
+								" style=\"height:70px;\">" +
+								"</div>" +
+								"<p>" +json[i].description+"<br>"+json[i].headline+
+								"</p>" +
+								"</div>" +
+								"<p className=\"g-linkinfo\"><cite>"+json[i].avatar_url+"</cite>" +
+								"<span className=\"g-linkinfo-span\">-</span>" +
+								"<a href=\""+json[i].avatar_url+"\"" +
+								" target=\"_blank\" className=\"m\">快照" +
+								"</a>" +
+								"</p>" +
+								"</div>" +
+								"</div>" +
+								"</li>"
+						)}
+						p=parseInt(page);
+							first=p+1;
+							second=p+2;
+							third=p+3;
+							fourth=p+4;
+							fifth=p+5;
+							sixth=p+6;
+							seventh=p+7;
+							$(".turn").append("<div class=\"page1\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+p+"\">"+p+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page2\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+first+"\">"+first+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page3\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+second+"\">"+second+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page4\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+third+"\">"+third+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page5\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+fourth+"\">"+fourth+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page6\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+fifth+"\">"+fifth+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page7\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+sixth+"\">"+sixth+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page8\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+seventh+"\">"+seventh+"</a>\n" +
+									"\t\t\t</div>\n" +
+									"\t\t\t<div class=\"page9\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+first+"\">"+"下一页>"+"</a>\n" +
+									"\t\t\t</div>")
+
+					}
+				})
+			}
+		})
+
+
+	</script>
+</head>
+<body>
+	<!-- 顶部菜单栏 -->
+	<div id="header" class="shadow">
+	    <div class="inner">
+	        <div id="g-hd">
+	            <div id="g-hd-nav">
+	                <div class="g-hd-logo">
+	                    <a href="" title="到z知者首页" data-i="home">
+	                    	<img style="width: 90px; height:40px;" src="../imgs/logo.png">
+	                    </a>
+	                </div>
+	                <div id="head">
+	                    <div class="ac_wrap" style="min-width: 540px; top: 37px; left: 0px; display: none;">
+	                        <div unselectable="on" class="ac_wrap_inner">
+	                            <div unselectable="on" class="ac_menu_ctn">
+	                                <ul unselectable="on" class="ac_menu"></ul>
+	                                <div unselectable="on" class="so_feedback">
+	                                    <a unselectable="on" href="javascript:;" target="_blank" class="so_feedback_link" data-class="ac_menu">
+	                                        <span unselectable="on" class="so_feedback_icon"></span>
+	                                        <span unselectable="on" class="so_feedback_txt">反馈</span>
+	                                    </a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+						<form method="get" action="/search">
+	                    <span id="suggest-align" class="round">
+	                        <a href="javascript:;" class="search-del" title="清空"></a>
+	                        <input type="text" id="keyword" name="keyword" tabindex="1" class="input_key" value=" " maxlength="100" autocomplete="off">
+	                    </span>
+	                    <input type="submit" tabindex="3" id="su" value="搜索" class="s_btn"></form>
+	                    <span class="adv-search-wrap">
+	                        <a href="javascript:;" hidefocus="true" data-val="all" class="adv-search-btn">时间: 全部 </a>
+	                    </span>
+	                </div>
+	            </div>
+	            <div style="clear:both"></div>
+	        </div>
+	        <div class="hd-rtools" id="hd-rtools">
+	            <div class="menu">
+	                <div class="show-bigscreen">
+	                    <a class="title home-nav" href="">知者首页</a>
+	                </div>
+	                <div class="show-bigscreen">
+	                    <a class="title" href="javascript:;" id="feedback_top">反馈</a>
+	                </div>
+	                <div class="show-list setting-group">
+	                <a class="title" href="javascript:;">设置<span class="arrow"></span></a>
+	                    <ul class="g-menu g-shadow setting-list" style="display: none;">
+	                        <li id="search_setting" data-log="search-setting"><a href="javascript:;">搜索设置</a></li>
+	                        <li id="advanced_search" data-log="advanced-search"><a href="javascript:;">高级搜索</a></li>
+	                        <li><a href=" " target="_blank" data-log="feedbackCenter">意见反馈</a></li>
+	                    </ul>
+	                </div>
+	                <div class="show-list user-group ">
+	                    <a class="title" href="javascript:;">登录<span class="arrow"></span></a>
+	                    <ul class="g-menu g-shadow user-list">
+	                        <li><a id="user-login" href="" data-log="login">登录</a></li>
+	                        <li><a id="user-reg" href=" " target="_blank" data-log="signIn">注册</a></li>
+	                    </ul>
+	                </div>
+	                <div class="show-list">
+	                    <a id="my_kzx_flow_follow" class="title" href="javascript:;">我的关注                        
+	                        <span class="new1 follow_reddot"></span><span class="arrow"></span>
+	                    </a>
+	                    <ul class="g-menu g-shadow" style="display: none;">
+	                        <li class="toggle-red-dot" data-log="close-red-dot"><a href="javascript:;">隐藏红点</a></li>                         
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
+		</div>
+	<!-- 导航栏 -->
+	<div class="navigate">
+		<div class="main">
+			<a style="text-decoration: none;" href="">主要</a>
+		</div>
+		<div  class="description">
+			<a style="text-decoration: none;" href="">描述</a>
+		</div>
+		<div class="title">
+			<a style="text-decoration: none;" href="">标题</a>
+		</div>
+		<div class="name">
+			<a style="text-decoration: none;" href="">名字</a>
+		</div>
+		</div>
+	<!-- 回到顶端 -->
+	<div id="back_top">
+		<a href="">回到 顶部</a>
+		</div>
+	<!-- 搜索内容 -->
+	<div id="container">
+	    <div id="main">
+	        <ul class="result">
+
+
+	        </ul>
+	    </div>
+		</div>
+	<!-- 热榜 -->
+	<div class="trending_tab">
+		<div class="title">
+			<a href="">知者热榜></a>
+		</div>
+
+
+
+	</div>
+	<!--换页-->
+	<div class="page">
+		<div class="turn">
+
+		</div>
+		</div>		
+	<!-- 底部菜单栏 -->
+	<div class="foot">
+		<div class="foot_inner">
+			<div class="help">
+				<a href="">帮助</a>
+			</div>
+			<div class="report">
+				<a href="">举报</a>
+			</div>
+			<div class="feedback">
+				<a href="">用户反馈</a>
+			</div>
+		</div>
+		</div>
+	<h1 id="result"></h1>
+</body>
+</html>

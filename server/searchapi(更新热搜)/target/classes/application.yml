@@ -1,7 +1,13 @@
+server:
+  port: 80
 spring:
   data:
     mongodb:
-      database: zhihu
-      host: 121.5.146.33
-      port: 27000
-
+      uri: mongodb://admin:123456@121.5.146.33:29000/hotSearch?authSource=admin
+  web:
+    resources:
+      static-locations: classpath:/templates/,classpath:/static/
+  mvc:
+    view:
+      suffix: .html
+    static-path-pattern: /**
