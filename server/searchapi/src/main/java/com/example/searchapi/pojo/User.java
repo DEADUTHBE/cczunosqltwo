@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+
 /**
  * @ClassName User
  * @Description
@@ -16,7 +18,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class User {
-    String name;
-    String description;
-    String headline;
+    String Username;
+    String searchKey;
+    String timeStamp;
+
+    public User(String searchKey, String timeStamp) {
+        this.searchKey = searchKey;
+        this.timeStamp = timeStamp;
+    }
 }
