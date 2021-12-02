@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>知者搜索</title>
+	<link rel="stylesheet" type="text/css" href="css/search.css">
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script>
+		// 回到顶部按钮动效
+		$(function () {
+			$(window).scroll(function () {  //只要窗口滚动,就触发下面代码 
+				var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度 
+				if (scrollt > 200) {  //判断滚动后高度超过200px,就显示  
+					$("#back_top").fadeIn(400); //淡出     
+				} else {
+					$("#back_top").stop().fadeOut(400); //如果返回或者没有超过,就淡入.必须加上stop()停止之前动画,否则会出现闪动   
+				}
+			});
+			$("#back_top").click(function () { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+				$("html,body").animate({ scrollTop: "0px" }, 200);
+			});
+			$(function () {
+				$('#box_effect').mouseenter(function(){
+					if($('#keyword').val()){
+						$('#clear_box').html('×');
+					}
+					else{
+						$('#clear_box').css('cursor','auto');
+					}
+				}).mouseleave(function(){
+					$('#clear_box').html('&nbsp&nbsp');
+					$('#clear_box').css('cursor','pointer');
+				});
+				$('#clear_box').click(function () {
+					// alert("×被点击了")
+					$('#keyword').val('');
+				});
+			});
+		});
+	</script>
+	<script>
+		// 获取关键字
+		function getQueryVariable(variable) {
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split("=");
+				if (pair[0] == variable) { return decodeURI(pair[1]); }
+			}
+			return (false);
+		}
+		// 利用Ajax在页面加载时载入热搜数据
+		$(function () {
+			window.onload = function () {
+				//知者热榜模块
+				$.ajax({
+					url: "/hotdata",
+					type: "get",
+					dataType: "json",
+					success: function (json) {
+						var map = new Map();
+						for (i = 0; i < 10; i++) {
+							map.set(json[0].bili[i].questionUrl + "," + json[0].bili[i].word, parseInt(json[0].bili[i].num))
+						}
+						for (var j = 0; j < 10; j++) {
+							map.set(json[0].zhihu[j].questionUrl + "," + json[0].zhihu[j].word, parseInt(json[0].zhihu[j].num) * 10000)
+						}
+						// for(var k=0;k<10;k++){
+						// 	map.set(json[0].weibo[k].questionUrl+","+json[0].weibo[k].word,parseInt(json[0].weibo[k].num))
+						// } 微博数据有误，等待数据库更新后再取消注释
+						var sortArray = Array.from(map);
+						sortArray.sort(function (a, b) { return b[1] - a[1] });
+						for (i = 1; i <= 10; i++) {
+							if (i == 1) {
+								$(".trending_tab").append("<div" +
+									" class = \"inner\">" +
+									"<div" +
+									" class = \"point\">" + i + "</div>" +
+									"<div class=\"content\">" +
+									"<a href=\"" + sortArray[i - 1][0].split(",")[0] + "\">" + sortArray[i - 1][0].split(",")[1] + "</a>" +
+									"</div>" +
+									"</div>")
+							}
+							else if (i == 2)
+								$(".trending_tab").append("<div" +
+									" class = \"inner\">" +
+									"<div" +
+									" class = \"point\" style='color: orange;'>" + i + "</div>" +
+									"<div class=\"content\">" +
+									"<a href=\"" + sortArray[i - 1][0].split(",")[0] + "\">" + sortArray[i - 1][0].split(",")[1] + "</a>" +
+									"</div>" +
+									"</div>")
+							else if (i == 3) {
+								$(".trending_tab").append("<div" +
+									" class = \"inner\">" +
+									"<div" +
+									" class = \"point\" style='color: yellow;'>" + i + "</div>" +
+									"<div class=\"content\">" +
+									"<a href=\"" + sortArray[i - 1][0].split(",")[0] + "\">" + sortArray[i - 1][0].split(",")[1] + "</a>" +
+									"</div>" +
+									"</div>")
+							}
+							else $(".trending_tab").append("<div" +
+								" class = \"inner\">" +
+								"<div" +
+								" class = \"point\" style=\"color: rgba(0, 181, 0, 0.5);\">" + i + "</div>" +
+								"<div class=\"content\">" +
+								"<a href=\"" + sortArray[i - 1][0].split(",")[0] + "\">" + sortArray[i - 1][0].split(",")[1] + "</a>" +
+								"</div>" +
+								"</div>")
+						}
+
+
+					}
+				})
+				// 搜索功能交互
+				if (getQueryVariable("page") == false) {
+					var page = 1;
+				} else {
+					var page = getQueryVariable("page");
+				}
+				if (getQueryVariable("keyword") == false) {
+					alert("搜索内容为空！")
+				}
+				document.getElementsByTagName("input")[0].value = getQueryVariable("keyword");
+				$.ajax({
+					url: "/hot?keyword=" + getQueryVariable("keyword") + "&page=" + page,
+					type: "get",
+					dataType: "json",
+					success: function (json) {
+						for (i = 0; i < 20; i++) {
+							$(".result").append("<li className = \"res-list\" data - lazyload = \"1\" > <h3 className = \"res-title\">" +
+								"<a href = \"" + json[i].avatar_url + "\" target = \"_blank\" >" + json[i].name + "  回复数:" + json[i].answer_count + "</a>" +
+								"</h3>" +
+								"<div className=\"res-rich res-movie clearfix\">" +
+								"<div>" +
+								"<div>" +
+								"<div>" +
+								"<img className=\"c-img c-img3 c-img-radius-large\"" +
+								" src=\"" + json[i].avatar_url + "\"" +
+								" style=\"height:70px;\">" +
+								"</div>" +
+								"<p>" + json[i].description + "<br>" + json[i].headline +
+								"</p>" +
+								"</div>" +
+								"<p className=\"g-linkinfo\"><cite>" + json[i].avatar_url + "</cite>" +
+								"<span className=\"g-linkinfo-span\">-</span>" +
+								"<a href=\"" + json[i].avatar_url + "\"" +
+								" target=\"_blank\" className=\"m\">快照" +
+								"</a>" +
+								"</p>" +
+								"</div>" +
+								"</div>" +
+								"</li>"
+							)
+						}
+						p = parseInt(page);
+						first = p + 1;
+						second = p + 2;
+						third = p + 3;
+						fourth = p + 4;
+						fifth = p + 5;
+						sixth = p + 6;
+						seventh = p + 7;
+						$(".turn").append("<div class=\"page1\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + p + "\">" + p + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page2\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + first + "\">" + first + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page3\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + second + "\">" + second + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page4\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + third + "\">" + third + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page5\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + fourth + "\">" + fourth + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page6\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + fifth + "\">" + fifth + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page7\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + sixth + "\">" + sixth + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page8\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + seventh + "\">" + seventh + "</a>\n" +
+							"\t\t\t</div>\n" +
+							"\t\t\t<div class=\"page9\">\n" +
+							"\t\t\t<a href=\"/second.html?keyword=" + document.getElementsByTagName("input")[0].value + "&page=" + first + "\">" + "下一页>" + "</a>\n" +
+							"\t\t\t</div>")
+
+					}
+				})
+			}
+		})
+	</script>
+</head>
+
+<body>
+	<!-- 顶部菜单栏 带阴影-->
+	<div>
+		<div id="header" class="shadow">
+			<!-- logo -->
+			<div id="logo">
+				<a href="" title="知者搜索" data-i="home" style="float: left; margin-right: -25px;">
+					<img src="imgs/logo.png" alt="加载错误">
+				</a>
+				<!-- 表单 -->
+				<div id="box_effect">
+					<form action="/search" method="get">
+					<!-- 搜索框 -->
+					<span id="search_box">
+						<span id="clear_box">&nbsp&nbsp</span>
+						<span id="split_f">|</span>
+						<!-- 输入框 -->
+							<input type="text" name="keyword" id="keyword" tabindex="1" class="input_key"
+								maxlength="100" autocomplete="off" value="">	
+					</span>
+					<!-- 按钮 -->
+					<input type="submit" tabindex="3" id="sub" class="s_button" value="搜索">
+					</form>
+				</div>
+			</div>
+			<!-- 右边 -->
+			<div id="weather">
+				<!-- 把第一页的天气api在这也放了一份 -->
+				<iframe width="400" height="100" frameborder="0" scrolling="no" hspace="0"
+					src="https://i.tianqi.com/?c=code&a=getcode&id=35&site=34&icon=1"></iframe>
+			</div>
+		</div>
+		<hr>
+	</div>
+	<div id="container">
+		
+	</div>
+
+
+
+
+</body>
+
+</html>
