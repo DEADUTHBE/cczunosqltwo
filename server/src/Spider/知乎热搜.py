@@ -1,8 +1,7 @@
+import pymongo
 import requests
-import time
-import pymongo
 from lxml import etree
-import pymongo
+
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["hot"]
 mycol = mydb["zhihu"]

@@ -1,7 +1,9 @@
-import time
-import requests
-import pymongo
 import json
+import time
+
+import requests
+
+from .SpiderRootClass import Spider
 
 """
 :Author:    iWorld
@@ -11,27 +13,19 @@ import json
 """
 
 
-class ZhiHuSpider:
+class ZhiHuSpider(Spider):
     def __init__(self):
-        self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
-        self.myDB = self.myClient["hotSearch"]
-        self.myCol = self.myDB["ZhiHu"]
-        self.myCol.drop()
+        super().__init__("ZhiHu")
         self.url = "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&mobile=true"
         self.questionUrl = "https://www.zhihu.com/question/{}"
-        self.headers = {
-            'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) " +
-                          "AppleWebKit/605.1.15 (KHTML, like Gecko) " +
-                          "Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.45"
-        }
 
     def getZhiHuHot(self):
         req = requests.get(self.url, headers=self.headers)
         hotSearch = req.text
         hotSearch = json.loads(hotSearch)
         hotSearch = hotSearch["data"]
+        hotDict = dict()
 
-        hotDict = {}
         rank = 0
         for hot in hotSearch:
             hotDict.clear()
@@ -42,9 +36,9 @@ class ZhiHuSpider:
             # 预览文案
             hotDict["text"] = hot["target"]["excerpt"]
             # 预览图url
-            hotDict["previewPicUrl"] = hot["children"][0]["thumbnail"]
+            hotDict["PicUrl"] = hot["children"][0]["thumbnail"]
             # 问题详情页url
-            hotDict["questionUrl"] = self.questionUrl.format(hot["target"]["id"])
+            hotDict["detailUrl"] = self.questionUrl.format(hot["target"]["id"])
             # 问题排名
             hotDict["rank"] = rank
             # 时间戳
