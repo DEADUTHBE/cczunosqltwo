@@ -1,7 +1,9 @@
 import json
 import time
+
 import requests
-from SpiderRootClass import Spider
+
+from .SpiderRootClass import Spider
 
 """
 :Author:    iWorld
@@ -22,25 +24,26 @@ class ZhiHuSpider(Spider):
         hotSearch = req.text
         hotSearch = json.loads(hotSearch)
         hotSearch = hotSearch["data"]
+        hotDict = dict()
 
         rank = 0
         for hot in hotSearch:
-            self.__hot.clear()
+            hotDict.clear()
             # 热搜词
-            self.__hot["word"] = hot["target"]["title"]
+            hotDict["word"] = hot["target"]["title"]
             # 热度指数
-            self.__hot["num"] = hot["detail_text"]
+            hotDict["num"] = hot["detail_text"]
             # 预览文案
-            self.__hot["text"] = hot["target"]["excerpt"]
+            hotDict["text"] = hot["target"]["excerpt"]
             # 预览图url
-            self.__hot["previewPicUrl"] = hot["children"][0]["thumbnail"]
+            hotDict["PicUrl"] = hot["children"][0]["thumbnail"]
             # 问题详情页url
-            self.__hot["questionUrl"] = self.questionUrl.format(hot["target"]["id"])
+            hotDict["detailUrl"] = self.questionUrl.format(hot["target"]["id"])
             # 问题排名
-            self.__hot["rank"] = rank
+            hotDict["rank"] = rank
             # 时间戳
-            self.__hot["timestamp"] = time.time()
+            hotDict["timestamp"] = time.time()
             # 存入MongoDB
-            self.myCol.insert_one(self.__hot)
+            self.myCol.insert_one(hotDict)
             rank += 1
         print(f"知乎\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")

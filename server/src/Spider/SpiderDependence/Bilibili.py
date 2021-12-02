@@ -1,8 +1,9 @@
 import json
 import time
+
 import requests
 
-from SpiderRootClass import Spider
+from .SpiderRootClass import Spider
 
 """
 :Author:    iWorld
@@ -24,23 +25,24 @@ class BilibiliSpider(Spider):
         hotSearch = hotSearch["data"]["list"]
 
         rank = 0
+        hotDict = dict()
         for hot in hotSearch:
-            self.__hot.clear()
+            hotDict.clear()
             # 热搜词
-            self.__hot["title"] = hot["title"]
+            hotDict["title"] = hot["title"]
             # 热度指数
-            self.__hot["score"] = hot["score"]
+            hotDict["score"] = hot["score"]
             # 预览文案
-            self.__hot["text"] = hot["desc"]
+            hotDict["text"] = hot["desc"]
             # 预览图url
-            self.__hot["picUrl"] = hot["pic"]
+            hotDict["picUrl"] = hot["pic"]
             # 问题详情页url
-            self.__hot["detailUrl"] = hot["short_link"]
+            hotDict["detailUrl"] = hot["short_link"]
             # 问题排名
-            self.__hot["rank"] = rank
+            hotDict["rank"] = rank
             # 时间戳
-            self.__hot["timestamp"] = time.time()
+            hotDict["timestamp"] = time.time()
             # 存入MongoDB
-            self.myCol.insert_one(self.__hot)
+            self.myCol.insert_one(hotDict)
             rank += 1
         print(f"Bilibili\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")

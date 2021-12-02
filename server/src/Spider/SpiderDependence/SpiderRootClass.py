@@ -23,7 +23,8 @@ class Spider:
     __hot = {}
 
     def __init__(self, DBName):
-        self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
+        # self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
+        self.myClient = pymongo.MongoClient("mongodb://admin:123456@121.5.146.33:29000/")
         self.myDB = self.myClient["hotSearch"]
         self.myCol = self.myDB[f"{DBName}"]
         self.myCol.drop()

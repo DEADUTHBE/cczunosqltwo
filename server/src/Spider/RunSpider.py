@@ -1,6 +1,5 @@
-from SpiderDependence import Bilibili
-from SpiderDependence import Weibo
-from SpiderDependence import ZhiHu
+from server.src.Spider.SpiderDependence import WeiboSpider, ZhiHuSpider, BilibiliSpider
+
 """
 :Author:    iWorld
 :Create:    2021/11/19 15:30
@@ -9,9 +8,9 @@ from SpiderDependence import ZhiHu
 """
 
 if __name__ == "__main__":
-    weiboSpider = Weibo.WeiboSpider()
+    weiboSpider = WeiboSpider()
     weiboSpider.getWeiboHot()
-    zhiHuSpider = ZhiHu.ZhiHuSpider()
+    zhiHuSpider = ZhiHuSpider()
     zhiHuSpider.getZhiHuHot()
-    bilibiliSpider = Bilibili.BilibiliSpider()
+    bilibiliSpider = BilibiliSpider()
     bilibiliSpider.getBilibiliHot()

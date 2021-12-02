@@ -1,8 +1,10 @@
 import json
 import time
-import requests
 from urllib.parse import quote
-from SpiderRootClass import Spider
+
+import requests
+
+from .SpiderRootClass import Spider
 
 """
 
@@ -67,31 +69,43 @@ class WeiboSpider(Spider):
         super().__init__("WeiBo")
         self.url = "https://weibo.com/ajax/statuses/hot_band"
         self.detail = "https://s.weibo.com/weibo?q=%23{}%23"
+        self.picUrl = "https://wx4.sinaimg.cn/orj360/{}.jpg"
 
     def getWeiboHot(self):
-        req = requests.get(self.url, headers=self.headers)
-        hotSearch = req.text
-        hotSearch = json.loads(hotSearch)
-        hotSearch = hotSearch["data"]["band_list"]
-        rank = 0
-        for hot in hotSearch:
-            self.__hot.clear()
-            # 热搜词
-            self.__hot["word"] = hot["word"]
-            # 热度指数
-            self.__hot["num"] = hot["num"]
-            # 预览文案
-            self.__hot["text"] = hot["mblog"]["text"]
-            # 预览图url
-            self.__hot["picUrl"] = hot["mblog"]["page_info"]["page_pic"]
-            # 问题详情页url
-            self.__hot["detailUrl"] = self.detail.format(quote(hot["word"]))
-            # 问题排名
-            self.__hot["rank"] = rank
-            # 时间戳
-            self.__hot["timestamp"] = time.time()
-            # 存入MongoDB
-            self.myCol.insert_one(self.__hot)
+        self.req = requests.get(self.url, self.headers)
+        if (self.req.status_code != 200):
+            print(f"{self.req.status_code}")
+            exit(-1)
+        self.hotSearch = self.req.text
+        self.hotSearch = json.loads(self.hotSearch)
+        self.hotSearch = self.hotSearch["data"]["band_list"]
 
+        hotDict = dict()
+        rank = 0
+        for hot in self.hotSearch:
+            self.hot = hot
+            hotDict.clear()
+            # 热搜词
+            hotDict["word"] = hot["word"]
+            # 热度指数
+            hotDict["num"] = hot["num"]
+            try:
+                # 预览文案
+                hotDict["text"] = hot["mblog"]["text"]
+                # 预览图url
+                hotDict["picUrl"] = hot["mblog"]["page_info"]["page_pic"]
+            except KeyError:
+                # 预览图url
+                hotDict["picUrl"] = self.picUrl.format(hot["mblog"]["pic_ids"])
+            except:
+                continue
+            # 问题详情页url
+            hotDict["detailUrl"] = self.detail.format(quote(hot["word"]))
+            # 问题排名
+            hotDict["rank"] = rank
+            # 时间戳
+            hotDict["timestamp"] = time.time()
+            # 存入MongoDB
+            self.myCol.insert_one(hotDict)
             rank += 1
         print(f"微博\t热搜已导入MongoDB - {time.asctime(time.localtime(time.time()))}")
