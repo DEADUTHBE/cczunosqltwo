@@ -22,6 +22,8 @@
 			$("#back_top").click(function () { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
 				$("html,body").animate({ scrollTop: "0px" }, 200);
 			});
+
+			// 陆星晨补充
 			$(function () {
 				$('#box_effect').mouseenter(function(){
 					if($('#keyword').val()){
@@ -215,7 +217,7 @@
 					<!-- 搜索框 -->
 					<span id="search_box">
 						<span id="clear_box">&nbsp&nbsp</span>
-						<span id="split_f">|</span>
+						<span id="split_f">&nbsp&nbsp|</span>
 						<!-- 输入框 -->
 							<input type="text" name="keyword" id="keyword" tabindex="1" class="input_key"
 								maxlength="100" autocomplete="off" value="">	
@@ -227,6 +229,7 @@
 			</div>
 			<!-- 右边 -->
 			<div id="weather">
+<!--				天气显示-->
 				<!-- 把第一页的天气api在这也放了一份 -->
 				<iframe width="400" height="100" frameborder="0" scrolling="no" hspace="0"
 					src="https://i.tianqi.com/?c=code&a=getcode&id=35&site=34&icon=1"></iframe>
@@ -234,13 +237,62 @@
 		</div>
 		<hr>
 	</div>
+
+
+<!--	搜索内容-->
+	<!-- 回到顶端 -->
+	<div id="back_top">
+		<a href="">回到 顶部</a>
+	</div>
+	<!-- 搜索内容 -->
 	<div id="container">
-		
+		<div id="main">
+			<ul class="result">
+
+
+			</ul>
+		</div>
 	</div>
 
 
+<!--	热榜-->
+
+	<div class="">
+		<div class="">
+			<a href="", class="hot_know">知者热榜></a>
+		</div>
+
+	</div>
+<!--		<div class="hot_know">-->
+<!--		知者热榜 >-->
+<!--		<div class="trending_tab">-->
+
+<!--		</div>-->
+<!--	</div>-->
 
 
+
+	<!--换页-->
+	<div class="page">
+		<div class="turn">
+
+		</div>
+	</div>
+	<!-- 底部菜单栏 -->
+	<div class="foot">
+		<div class="foot_inner">
+			<div class="help">
+				<a href="">帮助</a>
+			</div>
+			<div class="report">
+				<a href="">举报</a>
+			</div>
+			<div class="feedback">
+				<a href="">用户反馈</a>
+			</div>
+		</div>
+	</div>
+	<h1 id="result"></h1>
 </body>
 
 </html>
