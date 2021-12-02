@@ -1,15 +1,27 @@
 package com.example.searchapi.controller;
 
 import com.example.searchapi.service.HotSearchService;
+import org.apache.lucene.search.TotalHits;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +32,7 @@ public class HotSearchController {
 
     @GetMapping("/hot")
     @ResponseBody
-    public List<Map<String,Object>> hotsearch(@RequestParam String keyword,@RequestParam(required = false,defaultValue = "1") String page) throws IOException {
+    public List<Map<String,Object>> hotsearch(@RequestParam String keyword,@RequestParam(required = false,defaultValue = "1") String page,HttpServletResponse resp) throws IOException {
 //        answer_count: 1477
 //        articles_count: 19
 //        avatar_url: "https://pic4.zhimg.com/7110e47e9674568d087befc770575b54_is.jpg"
@@ -89,20 +101,33 @@ public class HotSearchController {
 //        url_token: "ggff-ss"
 //        user_type: "people"
 //        voteup_count: 4884 投票计数
+
         String[] Scopes=new String[]{"description","headline","name"};//根据前端定义
-        return hotSearchService.hotSearchbyScope(keyword,page,Scopes,"answer_count");
+        Map res=hotSearchService.hotSearchbyScope(keyword,page,Scopes,"answer_count");
+
+        Iterator<List<Map<String, Object>>> iter = res.keySet().iterator();
+        List a=iter.next();Integer num=(Integer)res.get(a);
+        Integer pageNum = (int)Math.ceil(num/20.0);
+        Integer rest=num%20;
+        Cookie cookie = new Cookie("pagenum", pageNum.toString());
+        Cookie cookie2 = new Cookie("rest", rest.toString());
+        resp.addCookie(cookie);
+        resp.addCookie(cookie2);
+        return a;
     }
 @GetMapping("/search")
     public ModelAndView hotsearch2(@RequestParam String keyword, @RequestParam(required = false,defaultValue = "1") String page) throws IOException {
+        if(keyword==""){
+            ModelAndView modelAndViewIndex=new ModelAndView("redirect:/");
+            return modelAndViewIndex;
+        }
         keyword=URLEncoder.encode(keyword, "utf-8");
-    page =URLEncoder.encode(page, "utf-8");
+        page =URLEncoder.encode(page, "utf-8");
         ModelAndView modelAndView=new ModelAndView("redirect:/second.html?keyword="+keyword+"&page="+page);
+
         return modelAndView;
     }
-//    @GetMapping("/second")
-//    public String second(@RequestParam String keyword, @RequestParam(required = false,defaultValue = "1") Integer page) throws IOException {
-//
-//        return "second";
-//    }
+
+
 
 }

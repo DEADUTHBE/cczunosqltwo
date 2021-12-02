@@ -12,11 +12,11 @@ import lombok.ToString;
 @ToString
 public class BiliHotRecord {
     String _id;
-    String word;
-    String num;
+    String title;
+    String score;
     String text;
-    String previewPicUrl;
-    String questionUrl;
+    String picUrl;
+    String detailUrl;
     String rank;
     String timestamp;
 }
