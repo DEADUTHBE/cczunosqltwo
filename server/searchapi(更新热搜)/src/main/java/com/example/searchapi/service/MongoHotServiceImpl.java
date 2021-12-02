@@ -26,7 +26,7 @@ public class MongoHotServiceImpl implements mongoHotService{
     @Override
     public List<WeiboHotRecord> getWeiboHot() {
         Query query=new Query(Criteria.where("rank").gte(0));
-        List<WeiboHotRecord> weiboHotRecords = mongoTemplate.find(query, WeiboHotRecord.class, "weibo");
+        List<WeiboHotRecord> weiboHotRecords = mongoTemplate.find(query, WeiboHotRecord.class, "WeiBo");
         return weiboHotRecords;
     }
 

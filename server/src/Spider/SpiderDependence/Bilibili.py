@@ -1,7 +1,9 @@
-import time
-import requests
-import pymongo
 import json
+import time
+
+import requests
+
+from .SpiderRootClass import Spider
 
 """
 :Author:    iWorld
@@ -11,18 +13,10 @@ import json
 """
 
 
-class BilibiliSpider:
+class BilibiliSpider(Spider):
     def __init__(self):
-        self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")
-        self.myDB = self.myClient["hotSearch"]
-        self.myCol = self.myDB["Bilibili"]
-        self.myCol.drop()
+        super().__init__("Bilibili")
         self.url = "https://api.bilibili.com/x/web-interface/ranking/v2?rid=0&type=all"
-        self.headers = {
-            'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) " +
-                          "AppleWebKit/605.1.15 (KHTML, like Gecko) " +
-                          "Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.45"
-        }
 
     def getBilibiliHot(self):
         req = requests.get(self.url, headers=self.headers)
@@ -30,20 +24,20 @@ class BilibiliSpider:
         hotSearch = json.loads(hotSearch)
         hotSearch = hotSearch["data"]["list"]
 
-        hotDict = {}
         rank = 0
+        hotDict = dict()
         for hot in hotSearch:
             hotDict.clear()
             # 热搜词
-            hotDict["word"] = hot["title"]
+            hotDict["title"] = hot["title"]
             # 热度指数
-            hotDict["num"] = hot["score"]
+            hotDict["score"] = hot["score"]
             # 预览文案
             hotDict["text"] = hot["desc"]
             # 预览图url
-            hotDict["previewPicUrl"] = hot["pic"]
+            hotDict["picUrl"] = hot["pic"]
             # 问题详情页url
-            hotDict["questionUrl"] = hot["short_link"]
+            hotDict["detailUrl"] = hot["short_link"]
             # 问题排名
             hotDict["rank"] = rank
             # 时间戳

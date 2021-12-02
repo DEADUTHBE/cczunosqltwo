@@ -1,126 +1,12 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--    <script src="js/jquery-3.3.1.min.js"></script>-->
-<!--    <script>-->
-<!--        $(function(){-->
-<!--            $("#GetSearch").click(function () {-->
-<!--                $.ajax({-->
-<!--                    url : "/search?key="+$("#keytext").val(),-->
-<!--                    type : "get" ,-->
-<!--                    dataType : "json" ,-->
-<!--                    success : function(json){-->
-<!--                        $("#message").text(json[0].answer_count);-->
-<!--                        $("#message").append(json[1].name)-->
-<!--                    }-->
-<!--                })-->
-<!--            });-->
-<!--        })-->
-
-<!--        // $(function(){-->
-<!--        //     $("#btnPost").click(function () {-->
-<!--        //         $.ajax({-->
-<!--        //             url : "/restful/request/100",-->
-<!--        //             type : "post" ,-->
-<!--        //             data : "name=lily&age=23",-->
-<!--        //             dataType : "json" ,-->
-<!--        //             success : function(json){-->
-<!--        //                 $("#message").text(json.message+":"+json.id);-->
-<!--        //             }-->
-<!--        //         })-->
-<!--        //     });-->
-<!--        // })-->
-<!--        //-->
-<!--        // $(function(){-->
-<!--        //     $("#btnPut").click(function () {-->
-<!--        //         $.ajax({-->
-<!--        //             url : "/restful/request",-->
-<!--        //             type : "put" ,-->
-<!--        //             data : "name=lily&age=23",-->
-<!--        //             dataType : "json" ,-->
-<!--        //             success : function(json){-->
-<!--        //                 $("#message").text(json.message);-->
-<!--        //             }-->
-<!--        //         })-->
-<!--        //     });-->
-<!--        // })-->
-<!--        //-->
-<!--        // $(function(){-->
-<!--        //     $("#btnDelete").click(function () {-->
-<!--        //         $.ajax({-->
-<!--        //             url : "/restful/request",-->
-<!--        //             type : "delete" ,-->
-<!--        //             dataType : "json" ,-->
-<!--        //             success : function(json){-->
-<!--        //                 $("#message").text(json.message);-->
-<!--        //             }-->
-<!--        //         })-->
-<!--        //     });-->
-<!--        // })-->
-<!--        //-->
-<!--        // $(function () {-->
-<!--        //     $("#btnPersons").click(function () {-->
-<!--        //         $.ajax({-->
-<!--        //             url : "http://localhost:8080/restful/persons",-->
-<!--        //             type : "get",-->
-<!--        //             dataType : "json",-->
-<!--        //             success : function(json){-->
-<!--        //                 console.info(json);-->
-<!--        //                 for(var i = 0 ; i < json.length;i++){-->
-<!--        //                     var p = json[i];-->
-<!--        //                     // $("#divPersons").append("<h2>" + p.name + "-" + p.age + "-" + p.birthday+ "</h2>")-->
-<!--        //                     $("#message").text(p.name + "-" + p.age + "-" + p.birthday);-->
-<!--        //                 }-->
-<!--        //             }-->
-<!--        //         })-->
-<!--        //     })-->
-<!--        // })-->
-<!--    </script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>search,字段为description</h1>-->
-
-<!--  <input type="text" id="keytext" name="key">-->
-<!--  <input type="button" id="GetSearch" value="提交">-->
-
-<!--<h2>按排行搜索：字段可定义，后端默认为"description","headline","educations.major.name"3个字段，后面可根据选项修改</h2>-->
-<!--<form method="get" action="/hot">-->
-<!--    <input type="text" name="keyword">-->
-<!--    <input type="submit" value="提交">-->
-<!--</form>-->
-<!--<h2>同上，返回最大（投票数）的结果，一条</h2>-->
-<!--<form method="get" action="/hotone">-->
-<!--    <input type="text" name="keyword">-->
-<!--    <input type="submit" value="提交">-->
-<!--</form>-->
-<!--热搜数据接口：/hotdata-->
-<!--<h1 id="message"></h1>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/indexcs1.css">
-    <script type="text/javascript" src="js/index.js"></script>
-    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/index.js">
+    </script><script src="js/jquery-3.3.1.min.js"></script>
     <script>
-        // $(function(){
-        //     $("#GetSearch").click(function () {
-        //         $.ajax({
-        //             url : "/search?key="+$("#keytext").val(),
-        //             type : "get" ,
-        //             dataType : "json" ,
-        //             success : function(json){
-        //                 $("#message").text(json[0].answer_count);
-        //                 $("#message").append(json[1].name)
-        //             }
-        //         })
-        //     });
-        // })
         window.onload=function(){
             $.ajax({
                 url : "/hotdata",
@@ -128,13 +14,13 @@
                 dataType : "json" ,
                 success : function(json){
                     for(i=1;i<=9;i++){
-                        $("#bili").append("<a href=\""+json[0].bili[i].questionUrl+"\">"+i+"."+json[0].bili[i].word.substr(0,10)+"..."+"</a>"+"<br>")
-                        $("#weibo").append("<a href=\""+json[0].weibo[i].questionUrl+"\">"+i+"."+json[0].weibo[i].word.substr(0,10)+"..."+"</a>"+"<br>")
-                        $("#zhihu").append("<a href=\""+json[0].zhihu[i].questionUrl+"\">"+i+"."+json[0].zhihu[i].word.substr(0,10)+"..."+"</a>"+"<br>")
+                        $("#bili").append("<a href=\""+json[0].bili[i].detailUrl+"\">"+i+"."+json[0].bili[i].title.substr(0,10)+"..."+"</a>"+"<br>")
+                        $("#weibo").append("<a href=\""+json[0].weibo[i].detailUrl+"\">"+i+"."+json[0].weibo[i].word.substr(0,10)+"..."+"</a>"+"<br>")
+                        $("#zhihu").append("<a href=\""+json[0].zhihu[i].detailUrl+"\">"+i+"."+json[0].zhihu[i].word.substr(0,10)+"..."+"</a>"+"<br>")
                     }
-                    $("#bili").append("<a href=\""+json[0].bili[10].questionUrl+"\">"+i+"."+json[0].bili[10].word.substr(0,10)+"..."+"</a>")
-                    $("#weibo").append("<a href=\""+json[0].weibo[10].questionUrl+"\">"+i+"."+json[0].weibo[10].word.substr(0,10)+"..."+"</a>")
-                    $("#zhihu").append("<a href=\""+json[0].zhihu[10].questionUrl+"\">"+i+"."+json[0].zhihu[10].word.substr(0,10)+"..."+"</a>")
+                    $("#bili").append("<a href=\""+json[0].bili[10].detailUrl+"\">"+i+"."+json[0].bili[10].title.substr(0,10)+"..."+"</a>")
+                    $("#weibo").append("<a href=\""+json[0].weibo[10].detailUrl+"\">"+i+"."+json[0].weibo[10].word.substr(0,10)+"..."+"</a>")
+                    $("#zhihu").append("<a href=\""+json[0].zhihu[10].detailUrl+"\">"+i+"."+json[0].zhihu[10].word.substr(0,10)+"..."+"</a>")
                 }
             })
 
