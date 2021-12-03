@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class ElasticClientConfig {
     @Bean
     public RestHighLevelClient restHighLevelClient() {
-        RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("121.5.146.33", 9200, "http")));
+        RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200, "http")));
         return client;
     }
 }

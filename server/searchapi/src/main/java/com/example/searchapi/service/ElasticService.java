@@ -5,19 +5,19 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +33,8 @@ import java.util.concurrent.TimeUnit;
 public class ElasticService {
     @Autowired
     private RestHighLevelClient client;
-//    @Autowired
-//    MongoTemplate mongoTemplate;
+    @Autowired
+    MongoTemplate mongoTemplate;
 
     public List<Map<String, Object>> search(String key, int page) throws IOException {
         if (page <= 0) {
@@ -48,29 +48,74 @@ public class ElasticService {
 
         //2
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.from((page-1)*20);
+        searchSourceBuilder.from((page - 1) * 20);
         searchSourceBuilder.size(20);
 
         //3
-        MatchQueryBuilder query = QueryBuilders.matchQuery("description",key);
+        QueryBuilder query = QueryBuilders.boolQuery()
+                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("description", key)))
+                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("name", key)))
+                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("headline", key)));
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
-        searchSourceBuilder.query(query);
+        String[] includes = {"avatar_url", "answer_count", "following_count", "highlight","name","description","headline"};
+        searchSourceBuilder.query(query).fetchSource(includes, null);
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        highlightBuilder
+                .field("description").preTags("<em>").postTags("</em>")
+                .field("name").preTags("<em>").postTags("</em>")
+                .field("headline").preTags("<em>").postTags("</em>");
+        searchSourceBuilder.highlighter(highlightBuilder);
 
         //4
         searchRequest.source(searchSourceBuilder);
         SearchResponse search = client.search(searchRequest, RequestOptions.DEFAULT);
-
         for (SearchHit hit : search.getHits().getHits()) {
-            System.out.println(hit);
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            list.add(sourceAsMap);
+            Map<String, Object> map = hit.getSourceAsMap();
+            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+            HighlightField description = highlightFields.get("description");
+            HighlightField headline = highlightFields.get("headline");
+            HighlightField name = highlightFields.get("name");
+            Text[] fragmentsHeadline = null;
+            Text[] fragmentsDescription = null;
+            Text[] fragmentsName = null;
+            StringBuilder sbDescription = new StringBuilder("");
+            StringBuilder sbHeadline = new StringBuilder("");
+            StringBuilder sbName = new StringBuilder("");
+            if (description != null) {
+                fragmentsDescription = description.getFragments();
+                for (Text fragment : fragmentsDescription) {
+                    sbDescription.append(fragment.toString());
+                }
+                map.replace("description",sbDescription.toString());
+
+            }
+            if (headline != null) {
+                fragmentsHeadline = headline.getFragments();
+                for (Text fragment : fragmentsHeadline) {
+                    sbHeadline.append(fragment.toString());
+                }
+                map.replace("headline",sbHeadline.toString());
+            }
+            if (name!=null){
+                fragmentsName = name.getFragments();
+                for (Text text : fragmentsName) {
+                    sbName.append(text.toString());
+                }
+                map.replace("name",sbName.toString());
+            }
+//            System.out.println(map);
+            list.add(map);
         }
         return list;
     }
+
     public long getResultNum(String key) throws IOException {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-        MatchQueryBuilder query = QueryBuilders.matchQuery("description",key);
+        QueryBuilder query = QueryBuilders.boolQuery()
+                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("description", key)))
+                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("name", key)))
+                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("headline", key)));
         sourceBuilder.query(query);
         searchRequest.source(sourceBuilder);
         SearchResponse search = client.search(searchRequest, RequestOptions.DEFAULT);
@@ -78,6 +123,4 @@ public class ElasticService {
         TotalHits totalHits = hits.getTotalHits();
         return totalHits.value;
     }
-
-
 }

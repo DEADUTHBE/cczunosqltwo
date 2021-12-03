@@ -6,11 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SearchapiApplicationTests {
-
-    // 测试
-    void contextLoads() {
-
-    }
     @Test
     public void test(){
     }
