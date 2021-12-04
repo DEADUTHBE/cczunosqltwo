@@ -59,24 +59,30 @@
                 let page = parseInt(getPage())
                 p = page
                 let seventh = p + 7;
-                if (seventh >= pageNum) {
-                    p = pageNum-7
-                }
                 if (p != 1) {
                     $(".page0").html("<a href='/search?key=" + getKey() + "&page=" + (page - 1) + "'>上一页</a>")
-                }
-                else {
-                    $(".page0").css("display","none")
-                }
-                for (let i = 0; i < 8; i++) {
-                    $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
+                } else {
+                    $(".page0").css("display", "none")
                 }
                 if (page < pageNum) {
-                    $(".page9").html("<a href='/search?key=" + getKey() + "&page=" + (page+1) + "'>下一页</a>")
-                }else {
-                    $(".page9").css("display","none")
+                    $(".page9").html("<a href='/search?key=" + getKey() + "&page=" + (page + 1) + "'>下一页</a>")
+                } else {
+                    $(".page9").css("display", "none")
                 }
+                if (pageNum > 8) {
+                    if (seventh >= pageNum) {
+                        p = pageNum - 7
+                    }
+                    for (let i = 0; i < 8; i++) {
+                        $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
+                    }
+                }
+                else{
+                    for (let i = 1;i < pageNum;i++){
+                        $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
+                    }
 
+                }
             }
         })
 
@@ -160,14 +166,14 @@
 <div class="page">
     <div class="turn">
         <div class="page0"></div>
-        <div class="page1">1</div>
-        <div class="page2">2</div>
-        <div class="page3">3</div>
-        <div class="page4">4</div>
-        <div class="page5">5</div>
-        <div class="page6">6</div>
-        <div class="page7">7</div>
-        <div class="page8">8</div>
+        <div class="page1"></div>
+        <div class="page2"></div>
+        <div class="page3"></div>
+        <div class="page4"></div>
+        <div class="page5"></div>
+        <div class="page6"></div>
+        <div class="page7"></div>
+        <div class="page8"></div>
         <div class="page9"></div>
     </div>
 </div>
