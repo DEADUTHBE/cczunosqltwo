@@ -41,7 +41,7 @@ hr{
 	border-top: 1px solid #d0d0d5; 
 	width: 100%;
 	margin-top:0px;
-	index:0;
+	/* index:0; */
 	/* margin-top: 5px; */
 }
 .s_button{
