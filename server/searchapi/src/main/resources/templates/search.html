@@ -37,8 +37,8 @@
                 for (let i = 0; i < data.length; i++) {
                     str += "<li><h1>" + data[i].name + "</h1><img class='avatar' src=" + data[i].avatar_url + "><br><span>粉丝数:" + data[i].following_count + "</span><span>回复数:" + data[i].answer_count + "</span><br> <p>" + data[i].description.toString() + "</p><br><p>" + data[i].headline + "</p></li>"
                 }
--
-                $(".result").html(str)
+                -
+                    $(".result").html(str)
                 let cookie = document.cookie;
                 let cookies = cookie.split("; ")
                 let resultNum = 0
@@ -57,16 +57,25 @@
                 $("#resultNum").text(resultNum.toString() + "条结果")
                 // console.log(pageNum)
                 let page = parseInt(getPage())
-                p = parseInt(page);
+                p = page
                 let seventh = p + 7;
-                if (seventh > pageNum && seventh <= pageNum + 7) {
-                    p = p - 7;
+                if (seventh >= pageNum) {
+                    p = pageNum-7
                 }
-                $(".page0").html("<a href='/search?key=" + getKey() + "&page=" + (p - 1) + "'>上一页</a>")
+                if (p != 1) {
+                    $(".page0").html("<a href='/search?key=" + getKey() + "&page=" + (page - 1) + "'>上一页</a>")
+                }
+                else {
+                    $(".page0").css("display","none")
+                }
                 for (let i = 0; i < 8; i++) {
                     $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
                 }
-                $(".page9").html("<a href='/search?key=" + getKey() + "&page=" + (p + 1) + "'>下一页</a>")
+                if (page < pageNum) {
+                    $(".page9").html("<a href='/search?key=" + getKey() + "&page=" + (page+1) + "'>下一页</a>")
+                }else {
+                    $(".page9").css("display","none")
+                }
 
             }
         })
