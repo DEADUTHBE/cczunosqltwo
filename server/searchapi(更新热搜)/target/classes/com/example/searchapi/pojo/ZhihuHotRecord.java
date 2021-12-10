@@ -14,8 +14,8 @@ public class ZhihuHotRecord {
     String word;
     String num;
     String text;
-    String previewPicUrl;
-    String questionUrl;
+    String PicUrl;
+    String detailUrl;
     String rank;
     String timestamp;
 }

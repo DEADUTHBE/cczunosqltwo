@@ -41,14 +41,14 @@
 					success : function(json){
 						var map=new Map();
 						for(i=0;i<10;i++){
-							map.set(json[0].bili[i].questionUrl+","+json[0].bili[i].word,parseInt(json[0].bili[i].num))
+							map.set(json[0].bili[i].detailUrl+","+json[0].bili[i].title,parseInt(json[0].bili[i].score))
 						}
 						for(var j=0;j<10;j++){
-							map.set(json[0].zhihu[j].questionUrl+","+json[0].zhihu[j].word,parseInt(json[0].zhihu[j].num)*10000)
+							map.set(json[0].zhihu[j].detailUrl+","+json[0].zhihu[j].word,parseInt(json[0].zhihu[j].num)*10000)
 						}
-						// for(var k=0;k<10;k++){
-						// 	map.set(json[0].weibo[k].questionUrl+","+json[0].weibo[k].word,parseInt(json[0].weibo[k].num))
-						// } 微博数据有误，等待数据库更新后再取消注释
+						for(var k=0;k<10;k++){
+							map.set(json[0].weibo[k].detailUrl+","+json[0].weibo[k].word,parseInt(json[0].weibo[k].num))
+						}
 						var sortArray=Array.from(map);
 						sortArray.sort(function(a, b){return b[1] - a[1]});
 						for(i=1;i<=10;i++){
@@ -100,6 +100,8 @@
 					var page=1;
 				}else{
 					var page=getQueryVariable("page");
+					var nextpage=parseInt(page)+1;
+					var lastpage=parseInt(page)-1;
 				}
 				if(getQueryVariable("keyword")==false){
 					alert("搜索内容为空！")
@@ -110,7 +112,23 @@
 					type: "get",
 					dataType: "json",
 					success: function (json) {
+						var cookieArr=document.cookie.split(";");
+						var pagenum=cookieArr[2].split("=")[1];
+						var rest=cookieArr[3].split("=")[1];
+						if(parseInt(getQueryVariable("page"))==pagenum){
+							alert("到底了哦！")
+							nextpage=pagenum
+						}
+						if(parseInt(getQueryVariable("page"))>pagenum){
+							alert("此页没有数据了，请换页或返回首页重新搜索！")
+						}
+						if(parseInt(getQueryVariable("page"))<1){
+							alert("不能再往前了！")
+							lastpage=1
+						}
+						if(parseInt(page)<=parseInt(pagenum))
 						for(i=0;i<20;i++){
+							if(parseInt(rest)==i) break;
 						$(".result").append("<li className = \"res-list\" data - lazyload = \"1\" > <h3 className = \"res-title\">" +
 								"<a href = \""+json[i].avatar_url+"\" target = \"_blank\" >"+json[i].name+"  回复数:"+json[i].answer_count+"</a>" +
 								"</h3>"+
@@ -134,16 +152,25 @@
 								"</div>" +
 								"</div>" +
 								"</li>"
-						)}
+						)
+
+						}
 						p=parseInt(page);
-							first=p+1;
-							second=p+2;
-							third=p+3;
-							fourth=p+4;
-							fifth=p+5;
-							sixth=p+6;
 							seventh=p+7;
-							$(".turn").append("<div class=\"page1\">\n" +
+							if(seventh>pagenum){
+								p=pagenum-7;
+							}
+						first=p+1;
+						second=p+2;
+						third=p+3;
+						fourth=p+4;
+						fifth=p+5;
+						sixth=p+6;
+						seventh=p+7;
+							$(".turn").append("\t\t\t<div class=\"page9\">\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+lastpage+"\">"+"<上一页"+"</a>\n" +
+									"\t\t\t</div>"+
+									"<div class=\"page1\">\n" +
 									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+p+"\">"+p+"</a>\n" +
 									"\t\t\t</div>\n" +
 									"\t\t\t<div class=\"page2\">\n" +
@@ -168,7 +195,7 @@
 									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+seventh+"\">"+seventh+"</a>\n" +
 									"\t\t\t</div>\n" +
 									"\t\t\t<div class=\"page9\">\n" +
-									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+first+"\">"+"下一页>"+"</a>\n" +
+									"\t\t\t<a href=\"/second.html?keyword="+document.getElementsByTagName("input")[0].value+"&page="+nextpage+"\">"+"下一页>"+"</a>\n" +
 									"\t\t\t</div>")
 
 					}
@@ -187,7 +214,7 @@
 	            <div id="g-hd-nav">
 	                <div class="g-hd-logo">
 	                    <a href="" title="到z知者首页" data-i="home">
-	                    	<img style="width: 90px; height:40px;" src="../imgs/logo.png">
+	                    	<img style="width: 90px; height:40px;" src="imgs/logo.png">
 	                    </a>
 	                </div>
 	                <div id="head">
@@ -267,10 +294,7 @@
 			<a style="text-decoration: none;" href="">名字</a>
 		</div>
 		</div>
-	<!-- 回到顶端 -->
-	<div id="back_top">
-		<a href="">回到 顶部</a>
-		</div>
+
 	<!-- 搜索内容 -->
 	<div id="container">
 	    <div id="main">
@@ -296,7 +320,7 @@
 		</div>
 		</div>		
 	<!-- 底部菜单栏 -->
-	<div class="foot">
+	<div class="foot" style="text-decoration: none">
 		<div class="foot_inner">
 			<div class="help">
 				<a href="">帮助</a>
@@ -310,5 +334,9 @@
 		</div>
 		</div>
 	<h1 id="result"></h1>
+	<!-- 回到顶端 -->
+	<div id="back_top">
+		<a href="">回到 顶部</a>
+	</div>
 </body>
 </html>

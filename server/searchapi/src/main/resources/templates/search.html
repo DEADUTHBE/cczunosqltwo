@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/js/jquery-3.6.0.js}" src="../static/js/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" th:href="@{/css/search.css}" href="../static/css/search.css">
+    <script>
+        function getKey() {
+            let url = window.location.search.substring(1)
+            let str_s = url.split("&")
+            let key = str_s[0].split("=")[1]
+            key = decodeURI(key)
+            return key
+        }
+
+        function getPage() {
+            let url = window.location.search.substring(1)
+            let str_s = url.split("&")
+            let page
+            if (str_s.length != 2)
+                page = 1
+            else
+                page = str_s[1].split("=")[1]
+            return page
+        }
+
+        $.ajax({
+            url: "/s",
+            data: {
+                key: getKey(),
+                page: getPage()
+            },
+            method: "GET",
+            success: function (data) {
+                let str = ""
+                for (let i = 0; i < data.length; i++) {
+                    str += "<li><h1>" + data[i].name + "</h1><img class='avatar' src=" + data[i].avatar_url + "><br><span>粉丝数:" + data[i].following_count + "</span><span>回复数:" + data[i].answer_count + "</span><br> <p>" + data[i].description.toString() + "</p><br><p>" + data[i].headline + "</p></li>"
+                }
+                -
+                    $(".result").html(str)
+                let cookie = document.cookie;
+                let cookies = cookie.split("; ")
+                let resultNum = 0
+                let pageNum = 0
+                console.log(cookie)
+                for (let i = 0; i < cookies.length; i++) {
+                    let strings = cookies[i].split("=");
+                    if (strings[0] == "resultNum") {
+                        resultNum = strings[1]
+                    }
+                    if (strings[0] == "pageNum") {
+                        pageNum = strings[1]
+                    }
+
+                }
+                $("#resultNum").text(resultNum.toString() + "条结果")
+                // console.log(pageNum)
+                let page = parseInt(getPage())
+                p = page
+                let seventh = p + 7;
+                if (p != 1) {
+                    $(".page0").html("<a href='/search?key=" + getKey() + "&page=" + (page - 1) + "'>上一页</a>")
+                } else {
+                    $(".page0").css("display", "none")
+                }
+                if (page < pageNum) {
+                    $(".page9").html("<a href='/search?key=" + getKey() + "&page=" + (page + 1) + "'>下一页</a>")
+                } else {
+                    $(".page9").css("display", "none")
+                }
+                if (pageNum > 8) {
+                    if (seventh >= pageNum) {
+                        p = pageNum - 7
+                    }
+                    for (let i = 0; i < 8; i++) {
+                        $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
+                    }
+                }
+                else{
+                    for (let i = 1;i < pageNum;i++){
+                        $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
+                    }
+
+                }
+            }
+        })
+
+        function redirect() {
+            $(location).attr('href', "/search?key=" + getKey() + "&page=" + $(".btn").val())
+        }
+    </script>
+</head>
+<body>
+<!-- 顶部菜单栏 带阴影-->
+<div>
+    <div id="header" class="shadow">
+        <!-- logo -->
+        <div id="logo">
+            <a href="" title="知者搜索" data-i="home" style="float: left; margin-right: -25px;">
+                <img src="imgs/logo.png" alt="加载错误">
+            </a>
+            <!-- 表单 -->
+            <div id="box_effect">
+                <form action="/search" method="get">
+                    <!-- 搜索框 -->
+                    <span id="search_box">
+						<span id="clear_box">&nbsp&nbsp</span>
+						<span id="split_f">&nbsp&nbsp|</span>
+                        <!-- 输入框 -->
+							<input type="text" name="key" tabindex="1" class="input_key"
+                                   maxlength="100" autocomplete="off" value="">
+					</span>
+                    <!-- 按钮 -->
+                    <input type="submit" tabindex="3" id="sub" class="s_button" value="搜索">
+                </form>
+            </div>
+        </div>
+        <!-- 右边 -->
+        <div id="weather">
+            <!--				天气显示-->
+            <!-- 把第一页的天气api在这也放了一份 -->
+            <iframe width="400" height="100" frameborder="0" scrolling="no" hspace="0"
+                    src="https://i.tianqi.com/?c=code&a=getcode&id=35&site=34&icon=1">
+
+            </iframe>
+        </div>
+    </div>
+    <hr>
+</div>
+
+
+<!--	搜索内容-->
+<!-- 回到顶端 -->
+<div id="back_top">
+    <a href="">回到 顶部</a>
+</div>
+<!-- 搜索内容 -->
+<div id="container">
+    <div id="main">
+        <span id="resultNum"></span>
+        <br>
+        <ul class="result">
+        </ul>
+    </div>
+</div>
+
+
+<!--	热榜-->
+
+<div class="">
+    <div class="">
+        <a href="" , class="hot_know">知者热榜></a>
+    </div>
+
+</div>
+<!--		<div class="hot_know">-->
+<!--		知者热榜 >-->
+<!--		<div class="trending_tab">-->
+
+<!--		</div>-->
+<!--	</div>-->
+
+
+<!--换页-->
+<div class="page">
+    <div class="turn">
+        <div class="page0"></div>
+        <div class="page1"></div>
+        <div class="page2"></div>
+        <div class="page3"></div>
+        <div class="page4"></div>
+        <div class="page5"></div>
+        <div class="page6"></div>
+        <div class="page7"></div>
+        <div class="page8"></div>
+        <div class="page9"></div>
+    </div>
+</div>
+<!-- 底部菜单栏 -->
+<div class="foot">
+    <div class="foot_inner">
+        <div class="help">
+            <a href="">帮助</a>
+        </div>
+        <div class="report">
+            <a href="">举报</a>
+        </div>
+        <div class="feedback">
+            <a href="">用户反馈</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

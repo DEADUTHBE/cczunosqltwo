@@ -54,7 +54,7 @@ button:hover { background: #33CC33; }
 #container{
     display: flex;
     justify-content: space-between;
-    height: 373px;
+    height: 540px;
     background-color:  #cccccc2d;
 }
 #title{
@@ -66,15 +66,18 @@ button:hover { background: #33CC33; }
     /*position: relative;*/
     /*margin-left:590px; */
     /*margin-top:20px;*/
-    width:800px;
+    width: 610px;
+    display: block;
+    margin: auto;
+    margin-top: 1%;
     height:30px;
     /*border:3px solid #336633;*/
-    /*border-radius:8px 8px 1px 1px ;*/
+    border-radius:8px 8px 8px 8px ;
     background-color: #336633;
-    position: absolute;
-    left: 50%;
-top:50%;
-transform:translate(-50%,-50%);
+    /* position: absolute; */
+    /* left: 50%; */
+/* top:50%; */
+/* transform:translate(-50%,-50%); */
 
 }
 p{
@@ -112,20 +115,21 @@ p{
 }
 #bilibili1{
     float:left;
-    padding-right:60px;
-    padding-left:10px;
+    padding-right:110px;
+    padding-left:25px;
     padding-top:2px;
     cursor: pointer;
 }
 #ZhiHu1{
     float:left;
-    padding-right:60px;
+    padding-right:110px;
     padding-top:2px;
     cursor: pointer;
 }
 #weibo1{
     float:left;
     padding-top:2px;
+    padding-right: 26px;
     cursor: pointer;
 }
 #menu i{

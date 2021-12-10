@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/index.css}" href="../static/css/index.css" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.js}" src="../static/js/jquery-3.6.0.js"></script>
+    <script>
+    </script>
+</head>
+<body>
+<div>
+    <div id="tq" class="left">
+        <iframe frameborder="0" scrolling="no" hspace="0"
+                src="https://i.tianqi.com/?c=code&a=getcode&id=35&site=34&icon=1"></iframe>
+        <!-- 需要天气接口 -->
+    </div>
+    <div id="outer">
+        <!--导航栏开始-->
+        <div id="nav">
+            <ul>
+                <li class="left"><img id="logo" th:src="@{/imgs/logo.png}" src="../static/imgs/logo.png"></li>
+            </ul>
+        </div>
+        <!--导航栏结束-->
+        <!--搜索和热搜-->
+        <div id="contain">
+            <!--搜索部分-->
+            <div id="search">
+                <div id="search-div">
+                    <form action="/search" method="get">
+                        <input id="search-text" type="text" class="left" name="key">
+                        <button type="submit" id="search-btn">
+                            <img th:src="@{/imgs/search.png}" src="../static/imgs/search.png"
+                                 class="right" id="search-img">
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!--内容结束-->
+        </div>
+    </div>
+</div>
+</body>
+</html>
