@@ -81,9 +81,10 @@ hr{
     text-align: center;
     border-radius: 10px;
     font-size: 14px;
+    cursor: context-menu;
 }
-#back_top a{
-    text-decoration: none;
+#back_top span{
+
     color: brown;
 }
 #back_top a:hover{

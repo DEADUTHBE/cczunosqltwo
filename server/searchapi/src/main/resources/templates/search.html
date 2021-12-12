@@ -6,6 +6,40 @@
     <script th:src="@{/js/jquery-3.6.0.js}" src="../static/js/jquery-3.6.0.js"></script>
     <link rel="stylesheet" th:href="@{/css/search.css}" href="../static/css/search.css">
     <script>
+        // 回到顶部按钮动效
+        $(function () {
+            $(window).scroll(function () {  //只要窗口滚动,就触发下面代码
+                var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度
+                if (scrollt > 200) {  //判断滚动后高度超过200px,就显示
+                    $("#back_top").fadeIn(400); //淡出
+                } else {
+                    $("#back_top").stop().fadeOut(400); //如果返回或者没有超过,就淡入.必须加上stop()停止之前动画,否则会出现闪动
+                }
+            });
+            $("#back_top").click(function () { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+                $("html,body").animate({ scrollTop: "0px" }, 200);
+            });
+
+
+            $(function () {
+                $('#box_effect').mouseenter(function(){
+                    if($('.input_key').val()){
+                        $('#clear_box').html('×');
+                    }
+                    else{
+                        $('#clear_box').css('cursor','auto');
+                    }
+                }).mouseleave(function(){
+                    $('#clear_box').html('&nbsp&nbsp');
+                    $('#clear_box').css('cursor','pointer');
+                });
+                $('#clear_box').click(function () {
+                    // alert("×被点击了")
+                    $('.input_key').val('');
+                });
+            });
+        });
+
         function getKey() {
             let url = window.location.search.substring(1)
             let str_s = url.split("&")
@@ -217,10 +251,7 @@
 
 
 <!--	搜索内容-->
-<!-- 回到顶端 -->
-<div id="back_top">
-    <a href="">回到 顶部</a>
-</div>
+
 <!-- 搜索内容 -->
 <div id="container">
     <div id="main">
@@ -276,6 +307,10 @@
         <div class="feedback">
             <a href="">用户反馈</a>
         </div>
+    </div>
+    <!-- 回到顶端 -->
+    <div id="back_top">
+        <span>回到 顶部</span>
     </div>
 </div>
 </body>
