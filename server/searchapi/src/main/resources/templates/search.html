@@ -13,7 +13,93 @@
             key = decodeURI(key)
             return key
         }
+        $(function () {
+            window.onload = function () {
+                //知者热榜模块
+                //知者热榜模块
+                $.ajax({
+                    url : "/hotdata",
+                    type : "get" ,
+                    dataType : "json" ,
+                    success : function(json){
+                        var map=new Map();
+                        for(i=0;i<10;i++){
+                            map.set(json[0].bili[i].detailUrl+","+json[0].bili[i].title,parseInt(json[0].bili[i].score))
+                        }
+                        for(var j=0;j<10;j++){
+                            map.set(json[0].zhihu[j].detailUrl+","+json[0].zhihu[j].word,parseInt(json[0].zhihu[j].num)*10000)
+                        }
+                        for(var k=0;k<10;k++){
+                            map.set(json[0].weibo[k].detailUrl+","+json[0].weibo[k].word,parseInt(json[0].weibo[k].num))
+                        }
+                        var sortArray=Array.from(map);
+                        sortArray.sort(function(a, b){return b[1] - a[1]})
+                        function getChar(text) {
+                            if (text.length<=15){
+                                return "";
+                            }else {
+                                return "...";
+                            }
+                        }
+                        function insCon (i,toc) {
+                            if(toc==0){
+                                return sortArray[i-1][0].split(",")[0];
+                            }else if (toc==1){
+                                return sortArray[i-1][0].split(",")[1];
+                            }else {
+                                return "";
+                            }
+                        }
+                        for(i=1;i<=15;i++){
+                            if(i==1){
+                                $(".trending_tab").append("<div" +
+                                    " class = \"inner\">" +
+                                    "<div" +
+                                    " class = \"point\">"+ i +"</div>" +
+                                    "<div class=\"content\">" +
+                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "</div>" +
+                                    "</div>")
+                            }
+                            else if(i==2){
+                                $(".trending_tab").append("<div" +
+                                    " class = \"inner\">" +
+                                    "<div" +
+                                    " class = \"point\" style='color: orange;'>"+ i +"</div>" +
+                                    "<div class=\"content\">" +
+                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "</div>" +
+                                    "</div>")
+                            }
+                            else if(i==3)
+                            {
+                                $(".trending_tab").append("<div" +
+                                    " class = \"inner\">" +
+                                    "<div" +
+                                    " class = \"point\" style='color: yellow;'>"+ i +"</div>" +
+                                    "<div class=\"content\">" +
+                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "</div>" +
+                                    "</div>")
+                            }
+                            else {
+                                $(".trending_tab").append("<div" +
+                                    " class = \"inner\">" +
+                                    "<div" +
+                                    " class = \"point\" style=\"color: rgba(0, 181, 0, 0.5);\">"+ i +"</div>" +
+                                    "<div class=\"content\">" +
+                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "</div>" +
+                                    "</div>")
+                            }
+                        }
 
+
+                    }
+                })
+
+            }
+        })
         function getPage() {
             let url = window.location.search.substring(1)
             let str_s = url.split("&")
@@ -148,12 +234,13 @@
 
 <!--	热榜-->
 
-<div class="">
-    <div class="">
-        <a href="" , class="hot_know">知者热榜></a>
+<!--<div>-->
+    <div class="trending_tab">
+        <div id="hot_know" class="inner">
+            <a href=""  style="font-size: 13px">知者热榜></a>
+        </div>
     </div>
-
-</div>
+<!--</div>-->
 <!--		<div class="hot_know">-->
 <!--		知者热榜 >-->
 <!--		<div class="trending_tab">-->
