@@ -6,6 +6,35 @@
     <link th:href="@{/css/index.css}" href="../static/css/index.css" rel="stylesheet">
     <script type="text/javascript" th:src="@{/js/jquery-3.6.0.js}" src="../static/js/jquery-3.6.0.js"></script>
     <script>
+        window.onload=function(){
+            $.ajax({
+                url : "/hotdata",
+                type : "get" ,
+                dataType : "json" ,
+                success : function(json){
+                    for(i=1;i<=9;i++){
+                        $("#bili").append("<a href=\""+json[0].bili[i].detailUrl+"\">"+i+"."+json[0].bili[i].title.substr(0,10)+"..."+"</a>"+"<br>")
+                        $("#weibo").append("<a href=\""+json[0].weibo[i].detailUrl+"\">"+i+"."+json[0].weibo[i].word.substr(0,10)+"..."+"</a>"+"<br>")
+                        $("#zhihu").append("<a href=\""+json[0].zhihu[i].detailUrl+"\">"+i+"."+json[0].zhihu[i].word.substr(0,10)+"..."+"</a>"+"<br>")
+                    }
+                    $("#bili").append("<a href=\""+json[0].bili[10].detailUrl+"\">"+i+"."+json[0].bili[10].title.substr(0,10)+"..."+"</a>")
+                    $("#weibo").append("<a href=\""+json[0].weibo[10].detailUrl+"\">"+i+"."+json[0].weibo[10].word.substr(0,10)+"..."+"</a>")
+                    $("#zhihu").append("<a href=\""+json[0].zhihu[10].detailUrl+"\">"+i+"."+json[0].zhihu[10].word.substr(0,10)+"..."+"</a>")
+                }
+            })
+
+
+        }
+        function showHidden() {
+            var dis = document.getElementById('hidden');
+            if (dis.style.display == 'none') {
+                document.getElementById('show').innerHTML = "关闭 ";
+                dis.style.display = "";
+            } else {
+                document.getElementById('show').innerHTML = "展开 ";
+                dis.style.display = "none";
+            }
+        }
     </script>
 </head>
 <body>
@@ -35,6 +64,25 @@
                                  class="right" id="search-img">
                         </button>
                     </form>
+                    <div id = 'menu'>
+                        <div>
+                            <div id='bilibili1'><i>bilibili热搜榜</i></div>
+                            <div id='ZhiHu1'><i>知乎热搜榜</i></div>
+                            <div id='weibo1'><i>微博热搜榜</i></div>
+                            <div style="float:left;padding-left: 16px; padding-top:5px;cursor: pointer;" ><i style="font-size: 13px;font-style: normal;" type="button" id="show" onclick="showHidden()">展开</i></div>
+                        </div><br>
+                        <div id="hidden" style="display:none;">
+                            <div id="bili">
+
+                            </div>
+                            <div id="zhihu">
+
+                            </div>
+                            <div id="weibo">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--内容结束-->
