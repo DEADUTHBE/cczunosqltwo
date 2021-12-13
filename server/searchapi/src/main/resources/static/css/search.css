@@ -81,9 +81,10 @@ hr{
     text-align: center;
     border-radius: 10px;
     font-size: 14px;
+    cursor: context-menu;
 }
-#back_top a{
-    text-decoration: none;
+#back_top span{
+
     color: brown;
 }
 #back_top a:hover{
@@ -210,7 +211,9 @@ h3 {
     position: relative;
     margin-left: 5%;
     margin-top: 5%;
-    display:inline-block;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
 }
 .trending_tab a{
     text-decoration: none;
@@ -227,6 +230,7 @@ h3 {
 }
 .trending_tab .inner{
     width: 100%;
+    margin-top: 10px;
 }
 .trending_tab .inner .point{
     width: 5%;
@@ -241,7 +245,7 @@ h3 {
 }
 .trending_tab .inner .content{
     font-size: 14px;
-    width: 50%;
+    width: 75%;
     margin-top: 10px;
     color: brown;
     position: relative;
@@ -441,10 +445,11 @@ h3 {
 
 /*!*热榜*!*/
 
-.hot_know{
-    float:right;
-    margin-top: 40px;
-    margin-right: 320px;
+#hot_know{
+    /*float:right;*/
+    /*margin-top: 40px;*/
+    margin-left: 22px;
+
     font-size: 7px;
     color:mediumpurple;
     font-weight: bolder;
