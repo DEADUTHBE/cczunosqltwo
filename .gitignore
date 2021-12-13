@@ -1,2 +1,4 @@
 .idea
 temp
+server/src/Spider/SpiderDependence/SpiderRootClass.py
+server/src/Spider/SpiderDependence/__pycache__
