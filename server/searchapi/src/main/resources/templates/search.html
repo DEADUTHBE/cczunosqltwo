@@ -157,7 +157,7 @@
             success: function (data) {
                 let str = ""
                 for (let i = 0; i < data.length; i++) {
-                    str += "<li><a id='title' href=http://zhihu.com/people/"+data[i].url_token+">" + data[i].name + "</a><img class='avatar' src=" + data[i].avatar_url + "><br><span>粉丝数:" + data[i].follower_count + "</span><span>回复数:" + data[i].answer_count + "</span><br> <p>" + data[i].headline + "</p><br><p>" + data[i].description.toString() + "</p></li>"
+                    str += "<li><a id='title' href=http://zhihu.com/people/"+data[i].url_token+">" + data[i].name + "</a><img class='avatar' src=" + data[i].avatar_url + "><br><span>粉丝数:" + data[i].follower_count + "</span><span>回复数:" + data[i].answer_count + "</span><br> <p>" + data[i].headline + "</p><br><p id='description'>" + data[i].description.toString() + "</p></li>"
                 }
                 $(".result").html(str)
                 let cookie = document.cookie;
