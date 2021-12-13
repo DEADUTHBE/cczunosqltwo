@@ -1,0 +1,8 @@
+cloudfunctions
+miniprogram/components
+miniprogram/envList.js
+miniprogram/sitemap.json
+.eslintrc.js
+project.config.json
+project.private.config.json
+uploadCloudFunction.bat
