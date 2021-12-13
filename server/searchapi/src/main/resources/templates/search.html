@@ -17,21 +17,20 @@
                 }
             });
             $("#back_top").click(function () { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
-                $("html,body").animate({ scrollTop: "0px" }, 200);
+                $("html,body").animate({scrollTop: "0px"}, 200);
             });
 
 
             $(function () {
-                $('#box_effect').mouseenter(function(){
-                    if($('.input_key').val()){
+                $('#box_effect').mouseenter(function () {
+                    if ($('.input_key').val()) {
                         $('#clear_box').html('×');
+                    } else {
+                        $('#clear_box').css('cursor', 'auto');
                     }
-                    else{
-                        $('#clear_box').css('cursor','auto');
-                    }
-                }).mouseleave(function(){
+                }).mouseleave(function () {
                     $('#clear_box').html('&nbsp&nbsp');
-                    $('#clear_box').css('cursor','pointer');
+                    $('#clear_box').css('cursor', 'pointer');
                 });
                 $('#clear_box').click(function () {
                     // alert("×被点击了")
@@ -47,82 +46,84 @@
             key = decodeURI(key)
             return key
         }
+
         $(function () {
             window.onload = function () {
                 //知者热榜模块
                 //知者热榜模块
                 $.ajax({
-                    url : "/hotdata",
-                    type : "get" ,
-                    dataType : "json" ,
-                    success : function(json){
-                        var map=new Map();
-                        for(i=0;i<10;i++){
-                            map.set(json[0].bili[i].detailUrl+","+json[0].bili[i].title,parseInt(json[0].bili[i].score))
+                    url: "/hotdata",
+                    type: "get",
+                    dataType: "json",
+                    success: function (json) {
+                        var map = new Map();
+                        for (i = 0; i < 10; i++) {
+                            map.set(json[0].bili[i].detailUrl + "," + json[0].bili[i].title, parseInt(json[0].bili[i].score))
                         }
-                        for(var j=0;j<10;j++){
-                            map.set(json[0].zhihu[j].detailUrl+","+json[0].zhihu[j].word,parseInt(json[0].zhihu[j].num)*10000)
+                        for (var j = 0; j < 10; j++) {
+                            map.set(json[0].zhihu[j].detailUrl + "," + json[0].zhihu[j].word, parseInt(json[0].zhihu[j].num) * 10000)
                         }
-                        for(var k=0;k<10;k++){
-                            map.set(json[0].weibo[k].detailUrl+","+json[0].weibo[k].word,parseInt(json[0].weibo[k].num))
+                        for (var k = 0; k < 10; k++) {
+                            map.set(json[0].weibo[k].detailUrl + "," + json[0].weibo[k].word, parseInt(json[0].weibo[k].num))
                         }
-                        var sortArray=Array.from(map);
-                        sortArray.sort(function(a, b){return b[1] - a[1]})
+                        var sortArray = Array.from(map);
+                        sortArray.sort(function (a, b) {
+                            return b[1] - a[1]
+                        })
+
                         function getChar(text) {
-                            if (text.length<=15){
+                            if (text.length <= 15) {
                                 return "";
-                            }else {
+                            } else {
                                 return "...";
                             }
                         }
-                        function insCon (i,toc) {
-                            if(toc==0){
-                                return sortArray[i-1][0].split(",")[0];
-                            }else if (toc==1){
-                                return sortArray[i-1][0].split(",")[1];
-                            }else {
+
+                        function insCon(i, toc) {
+                            if (toc == 0) {
+                                return sortArray[i - 1][0].split(",")[0];
+                            } else if (toc == 1) {
+                                return sortArray[i - 1][0].split(",")[1];
+                            } else {
                                 return "";
                             }
                         }
-                        for(i=1;i<=15;i++){
-                            if(i==1){
+
+                        for (i = 1; i <= 15; i++) {
+                            if (i == 1) {
                                 $(".trending_tab").append("<div" +
                                     " class = \"inner\">" +
                                     "<div" +
-                                    " class = \"point\">"+ i +"</div>" +
+                                    " class = \"point\">" + i + "</div>" +
                                     "<div class=\"content\">" +
-                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "<a href=\"" + insCon(i, 0) + "\"" + "title=\"" + insCon(i, 1) + "\">" + insCon(i, 1).substring(0, 15) + getChar(insCon(i, 1)) + "</a>" +
                                     "</div>" +
                                     "</div>")
-                            }
-                            else if(i==2){
+                            } else if (i == 2) {
                                 $(".trending_tab").append("<div" +
                                     " class = \"inner\">" +
                                     "<div" +
-                                    " class = \"point\" style='color: orange;'>"+ i +"</div>" +
+                                    " class = \"point\" style='color: orange;'>" + i + "</div>" +
                                     "<div class=\"content\">" +
-                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "<a href=\"" + insCon(i, 0) + "\"" + "title=\"" + insCon(i, 1) + "\">" + insCon(i, 1).substring(0, 15) + getChar(insCon(i, 1)) + "</a>" +
                                     "</div>" +
                                     "</div>")
-                            }
-                            else if(i==3)
-                            {
+                            } else if (i == 3) {
                                 $(".trending_tab").append("<div" +
                                     " class = \"inner\">" +
                                     "<div" +
-                                    " class = \"point\" style='color: yellow;'>"+ i +"</div>" +
+                                    " class = \"point\" style='color: yellow;'>" + i + "</div>" +
                                     "<div class=\"content\">" +
-                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "<a href=\"" + insCon(i, 0) + "\"" + "title=\"" + insCon(i, 1) + "\">" + insCon(i, 1).substring(0, 15) + getChar(insCon(i, 1)) + "</a>" +
                                     "</div>" +
                                     "</div>")
-                            }
-                            else {
+                            } else {
                                 $(".trending_tab").append("<div" +
                                     " class = \"inner\">" +
                                     "<div" +
-                                    " class = \"point\" style=\"color: rgba(0, 181, 0, 0.5);\">"+ i +"</div>" +
+                                    " class = \"point\" style=\"color: rgba(0, 181, 0, 0.5);\">" + i + "</div>" +
                                     "<div class=\"content\">" +
-                                    "<a href=\""+insCon(i,0)+"\""+"title=\""+insCon(i,1)+"\">"+insCon(i,1).substring(0,15)+getChar(insCon(i,1))+"</a>" +
+                                    "<a href=\"" + insCon(i, 0) + "\"" + "title=\"" + insCon(i, 1) + "\">" + insCon(i, 1).substring(0, 15) + getChar(insCon(i, 1)) + "</a>" +
                                     "</div>" +
                                     "</div>")
                             }
@@ -134,6 +135,7 @@
 
             }
         })
+
         function getPage() {
             let url = window.location.search.substring(1)
             let str_s = url.split("&")
@@ -155,10 +157,9 @@
             success: function (data) {
                 let str = ""
                 for (let i = 0; i < data.length; i++) {
-                    str += "<li><h1>" + data[i].name + "</h1><img class='avatar' src=" + data[i].avatar_url + "><br><span>粉丝数:" + data[i].following_count + "</span><span>回复数:" + data[i].answer_count + "</span><br> <p>" + data[i].description.toString() + "</p><br><p>" + data[i].headline + "</p></li>"
+                    str += "<li><a id='title' href=http://zhihu.com/people/"+data[i].url_token+">" + data[i].name + "</a><img class='avatar' src=" + data[i].avatar_url + "><br><span>粉丝数:" + data[i].follower_count + "</span><span>回复数:" + data[i].answer_count + "</span><br> <p>" + data[i].headline + "</p><br><p>" + data[i].description.toString() + "</p></li>"
                 }
-                -
-                    $(".result").html(str)
+                $(".result").html(str)
                 let cookie = document.cookie;
                 let cookies = cookie.split("; ")
                 let resultNum = 0
@@ -196,9 +197,8 @@
                     for (let i = 0; i < 8; i++) {
                         $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
                     }
-                }
-                else{
-                    for (let i = 1;i < pageNum;i++){
+                } else {
+                    for (let i = 0; i < pageNum - p + 1; i++) {
                         $(".page" + (i + 1)).html("<a href='/search?key=" + getKey() + "&page=" + (p + i) + "'>" + (p + i) + "</a>")
                     }
 
@@ -212,8 +212,8 @@
     </script>
 </head>
 <body>
-<!-- 顶部菜单栏 带阴影-->
 <div>
+    <!-- 顶部菜单栏 带阴影-->
     <div id="header" class="shadow">
         <!-- logo -->
         <div id="logo">
@@ -245,72 +245,72 @@
 
             </iframe>
         </div>
+        <hr>
     </div>
-    <hr>
-</div>
 
 
-<!--	搜索内容-->
+    <!--	搜索内容-->
 
-<!-- 搜索内容 -->
-<div id="container">
-    <div id="main">
-        <span id="resultNum"></span>
-        <br>
-        <ul class="result">
-        </ul>
+    <!-- 搜索内容 -->
+    <div id="container">
+        <div id="main">
+            <span id="resultNum"></span>
+            <br>
+            <ul class="result">
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<!--	热榜-->
+    <!--	热榜-->
 
-<!--<div>-->
+    <!--<div>-->
     <div class="trending_tab">
         <div id="hot_know" class="inner">
-            <a href=""  style="font-size: 13px">知者热榜></a>
+            <a href="" style="font-size: 13px">知者热榜></a>
         </div>
     </div>
-<!--</div>-->
-<!--		<div class="hot_know">-->
-<!--		知者热榜 >-->
-<!--		<div class="trending_tab">-->
+    <!--</div>-->
+    <!--		<div class="hot_know">-->
+    <!--		知者热榜 >-->
+    <!--		<div class="trending_tab">-->
 
-<!--		</div>-->
-<!--	</div>-->
+    <!--		</div>-->
+    <!--	</div>-->
 
 
-<!--换页-->
-<div class="page">
-    <div class="turn">
-        <div class="page0"></div>
-        <div class="page1"></div>
-        <div class="page2"></div>
-        <div class="page3"></div>
-        <div class="page4"></div>
-        <div class="page5"></div>
-        <div class="page6"></div>
-        <div class="page7"></div>
-        <div class="page8"></div>
-        <div class="page9"></div>
-    </div>
-</div>
-<!-- 底部菜单栏 -->
-<div class="foot">
-    <div class="foot_inner">
-        <div class="help">
-            <a href="">帮助</a>
-        </div>
-        <div class="report">
-            <a href="">举报</a>
-        </div>
-        <div class="feedback">
-            <a href="">用户反馈</a>
+    <!--换页-->
+    <div class="page">
+        <div class="turn">
+            <div class="page0"></div>
+            <div class="page1"></div>
+            <div class="page2"></div>
+            <div class="page3"></div>
+            <div class="page4"></div>
+            <div class="page5"></div>
+            <div class="page6"></div>
+            <div class="page7"></div>
+            <div class="page8"></div>
+            <div class="page9"></div>
         </div>
     </div>
-    <!-- 回到顶端 -->
-    <div id="back_top">
-        <span>回到 顶部</span>
+    <!-- 底部菜单栏 -->
+    <div class="foot">
+        <div class="foot_inner">
+            <div class="help">
+                <a href="">帮助</a>
+            </div>
+            <div class="report">
+                <a href="">举报</a>
+            </div>
+            <div class="feedback">
+                <a href="">用户反馈</a>
+            </div>
+        </div>
+        <!-- 回到顶端 -->
+        <div id="back_top">
+            <span>回到 顶部</span>
+        </div>
     </div>
 </div>
 </body>

@@ -22,6 +22,7 @@ public class OnloadController {
         map.put("zhihu",mongoHotService.getZhihuHot());
         List<Map<String,List>> list = new ArrayList<>();
         list.add(map);
+        System.out.println(map);
         return list;
     }
 }

@@ -13,6 +13,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -50,18 +51,16 @@ public class ElasticService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from((page - 1) * 20);
         searchSourceBuilder.size(20);
+        searchSourceBuilder.sort("follower_count", SortOrder.DESC);
 
         //3
         QueryBuilder query = QueryBuilders.boolQuery()
-                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("description", key)))
-                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("name", key)))
-                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("headline", key)));
+                .should(QueryBuilders.multiMatchQuery(key, "description", "headline", "name"));
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
-        String[] includes = {"avatar_url", "answer_count", "following_count", "highlight","name","description","headline"};
+        String[] includes = {"avatar_url", "answer_count", "follower_count", "highlight", "name", "description", "headline", "url_token"};
         searchSourceBuilder.query(query).fetchSource(includes, null);
         HighlightBuilder highlightBuilder = new HighlightBuilder();
         highlightBuilder
-                .field("description").preTags("<em>").postTags("</em>")
                 .field("name").preTags("<em>").postTags("</em>")
                 .field("headline").preTags("<em>").postTags("</em>");
         searchSourceBuilder.highlighter(highlightBuilder);
@@ -72,38 +71,27 @@ public class ElasticService {
         for (SearchHit hit : search.getHits().getHits()) {
             Map<String, Object> map = hit.getSourceAsMap();
             Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            HighlightField description = highlightFields.get("description");
             HighlightField headline = highlightFields.get("headline");
             HighlightField name = highlightFields.get("name");
             Text[] fragmentsHeadline = null;
-            Text[] fragmentsDescription = null;
             Text[] fragmentsName = null;
             StringBuilder sbDescription = new StringBuilder("");
             StringBuilder sbHeadline = new StringBuilder("");
             StringBuilder sbName = new StringBuilder("");
-            if (description != null) {
-                fragmentsDescription = description.getFragments();
-                for (Text fragment : fragmentsDescription) {
-                    sbDescription.append(fragment.toString());
-                }
-                map.replace("description",sbDescription.toString());
-
-            }
             if (headline != null) {
                 fragmentsHeadline = headline.getFragments();
                 for (Text fragment : fragmentsHeadline) {
                     sbHeadline.append(fragment.toString());
                 }
-                map.replace("headline",sbHeadline.toString());
+                map.replace("headline", sbHeadline.toString());
             }
-            if (name!=null){
+            if (name != null) {
                 fragmentsName = name.getFragments();
                 for (Text text : fragmentsName) {
                     sbName.append(text.toString());
                 }
-                map.replace("name",sbName.toString());
+                map.replace("name", sbName.toString());
             }
-//            System.out.println(map);
             list.add(map);
         }
         return list;
@@ -112,10 +100,8 @@ public class ElasticService {
     public long getResultNum(String key) throws IOException {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-        QueryBuilder query = QueryBuilders.boolQuery()
-                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("description", key)))
-                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("name", key)))
-                .should(QueryBuilders.constantScoreQuery(QueryBuilders.matchQuery("headline", key)));
+        QueryBuilder query = QueryBuilders.boolQuery().
+                should(QueryBuilders.multiMatchQuery(key, "description", "headline", "name"));
         sourceBuilder.query(query);
         searchRequest.source(sourceBuilder);
         SearchResponse search = client.search(searchRequest, RequestOptions.DEFAULT);
