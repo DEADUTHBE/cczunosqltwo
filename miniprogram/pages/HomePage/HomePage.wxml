@@ -1,4 +1,15 @@
 <!--pages/HomePage.wxml-->
-<view class="container">
-  Test Test Test Test 
+<view class="background">
+    <view class="container">
+        <view class="logo">
+            <image src="../../images/HomePage/logo.png" mode="aspectFit"></image>
+        </view>
+        <view class="searchBox">
+            <view class="searchInput">
+                <input placeholder="搜索内容" confirm-type="search" adjust-position="true" type="text" class="text"></input>
+                <image class="img" src="../../images/HomePage/searchLogo.svg"></image>
+            </view>
+
+        </view>
+    </view>
 </view>

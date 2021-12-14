@@ -1,0 +1,32 @@
+{
+    "pages": [
+        "miniprogram/pages/HomePage/HomePage",
+        "miniprogram/pages/HotSearch/HotSearch"
+    ],
+    "tabBar": {
+        "list": [
+            {
+                "pagePath": "miniprogram/pages/HomePage/HomePage",
+                "text": "搜索",
+                "iconPath": "miniprogram/images/HomePage/HomePage.png",
+                "selectedIconPath": "miniprogram/images/HomePage/HomePageSelected.png"
+            },
+            {
+                "pagePath": "miniprogram/pages/HotSearch/HotSearch",
+                "text": "热搜",
+                "iconPath": "miniprogram/images/HotSearch/HotSearch.png",
+                "selectedIconPath": "miniprogram/images/HotSearch/HotSearchSelected.png"
+            }
+        ]
+    },
+    "window": {
+        "backgroundColor": "#F6F6F6",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#F6F6F6",
+        "navigationBarTitleText": "知者",
+        "navigationBarTextStyle": "black"
+    },
+    "sitemapLocation": "sitemap.json",
+    "style": "v2",
+    "lazyCodeLoading": "requiredComponents"
+}

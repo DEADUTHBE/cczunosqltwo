@@ -6,3 +6,4 @@ miniprogram/sitemap.json
 project.config.json
 project.private.config.json
 uploadCloudFunction.bat
+.idea
