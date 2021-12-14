@@ -1,9 +1,10 @@
 {
   "pages": [
-    "miniprogram/pages/WeiBo/WeiBo",
     "miniprogram/pages/HomePage/HomePage",
+    "miniprogram/pages/WeiBo/WeiBo",
     "miniprogram/pages/ZhiHu/ZhiHu",
-    "miniprogram/pages/Bilibili/Bilibili"
+    "miniprogram/pages/Bilibili/Bilibili",
+    "miniprogram/pages/HomePage/DetailPage/DetailPage"
   ],
   "tabBar": {
     "list": [

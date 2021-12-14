@@ -6,8 +6,19 @@
         </view>
         <view class="searchBox">
             <view class="searchInput">
-                <input placeholder="搜索内容" confirm-type="search" adjust-position="true" type="text" class="text"></input>
-                <image class="img" src="../../images/HomePage/searchLogo.svg"></image>
+                <input bindinput="getInput" placeholder="搜索内容" confirm-type="search" adjust-position="true" type="text"
+                       class="text" bindconfirm="doSearch" name="word"></input>
+
+                <view wx:if="{{!hasUserInfo}}">
+                    <image wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="img"
+                           src="../../images/HomePage/searchLogo.svg"></image>
+                    <image wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="img"
+                           src="../../images/HomePage/searchLogo.svg"></image>
+                </view>
+                <view wx:else>
+                    <image bindtap="doSearchFromIcon" class="img" src="../../images/HomePage/searchLogo.svg"></image>
+                </view>
+
             </view>
 
         </view>
