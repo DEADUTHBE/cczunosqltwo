@@ -1,32 +1,46 @@
 {
-    "pages": [
-        "miniprogram/pages/HomePage/HomePage",
-        "miniprogram/pages/HotSearch/HotSearch"
-    ],
-    "tabBar": {
-        "list": [
-            {
-                "pagePath": "miniprogram/pages/HomePage/HomePage",
-                "text": "搜索",
-                "iconPath": "miniprogram/images/HomePage/HomePage.png",
-                "selectedIconPath": "miniprogram/images/HomePage/HomePageSelected.png"
-            },
-            {
-                "pagePath": "miniprogram/pages/HotSearch/HotSearch",
-                "text": "热搜",
-                "iconPath": "miniprogram/images/HotSearch/HotSearch.png",
-                "selectedIconPath": "miniprogram/images/HotSearch/HotSearchSelected.png"
-            }
-        ]
-    },
-    "window": {
-        "backgroundColor": "#F6F6F6",
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#F6F6F6",
-        "navigationBarTitleText": "知者",
-        "navigationBarTextStyle": "black"
-    },
-    "sitemapLocation": "sitemap.json",
-    "style": "v2",
-    "lazyCodeLoading": "requiredComponents"
+  "pages": [
+    "miniprogram/pages/WeiBo/WeiBo",
+    "miniprogram/pages/HomePage/HomePage",
+    "miniprogram/pages/ZhiHu/ZhiHu",
+    "miniprogram/pages/Bilibili/Bilibili"
+  ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "miniprogram/pages/HomePage/HomePage",
+        "text": "搜索",
+        "iconPath": "miniprogram/images/HomePage/HomePage.png",
+        "selectedIconPath": "miniprogram/images/HomePage/HomePageSelected.png"
+      },
+      {
+        "pagePath": "miniprogram/pages/WeiBo/WeiBo",
+        "text": "微博热搜",
+        "iconPath": "miniprogram/images/HotSearch/WB_icon.png",
+        "selectedIconPath": "miniprogram/images/HotSearch/WB_iconSelected.png"
+      },
+      {
+        "pagePath": "miniprogram/pages/ZhiHu/ZhiHu",
+        "text": "知乎热搜",
+        "iconPath": "miniprogram/images/HotSearch/ZhiHu_icon.png",
+        "selectedIconPath": "miniprogram/images/HotSearch/ZhiHu_iconSelected.png"
+      },
+      {
+        "pagePath": "miniprogram/pages/Bilibili/Bilibili",
+        "text": "Bilibili热搜",
+        "iconPath": "miniprogram/images/HotSearch/Bilibili_icon.png",
+        "selectedIconPath": "miniprogram/images/HotSearch/Bilibili_iconSelected.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "知者",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
 }
