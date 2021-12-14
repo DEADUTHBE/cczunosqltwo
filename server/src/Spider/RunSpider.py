@@ -10,10 +10,24 @@ import time
 """
 if __name__ == "__main__":
     while True:
-        weiboSpider = WeiboSpider()
-        weiboSpider.getWeiboHot()
-        zhiHuSpider = ZhiHuSpider()
-        zhiHuSpider.getZhiHuHot()
-        bilibiliSpider = BilibiliSpider()
-        bilibiliSpider.getBilibiliHot()
+        try:
+            weiboSpider = WeiboSpider()
+            weiboSpider.getWeiboHot()
+        except Exception as e:
+            print(e)
+            continue
+
+        try:
+            zhiHuSpider = ZhiHuSpider()
+            zhiHuSpider.getZhiHuHot()
+        except Exception as e:
+            print(e)
+            continue
+
+        try:
+            bilibiliSpider = BilibiliSpider()
+            bilibiliSpider.getBilibiliHot()
+        except Exception as e:
+            print(e)
+            continue
         time.sleep(60)
