@@ -5,17 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class BiliHotRecord {
+public class ZhihuHotRecord {
     String _id;
     String word;
     String num;
     String text;
-    String picUrl;
+    String PicUrl;
     String detailUrl;
     String rank;
     String timestamp;
