@@ -1,0 +1,182 @@
+/* pages/HomePage.wxss */
+.background {
+    /*height: 100%;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0rpx 20rpx 0rpx 20rpx;
+    /*background: #f0f0f0;*/
+}
+
+.container {
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 32rpx;
+}
+
+.logo {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50rpx;
+    width: 450rpx;
+    margin-top: 80rpx;
+    margin-bottom: 80rpx;
+}
+
+.divLine {
+    background: #E0E3DA;
+    width: 100%;
+    height: 5rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo .img {
+    width: 200rpx;
+    float: left;
+}
+
+.hotSearchBox {
+
+    background: white;
+    width: 100%;
+    /*height: 100%;*/
+    border-radius: 20rpx;
+
+    padding: 10rpx 0 0 0;
+    margin-top: 20rpx;
+}
+
+.hotSearchBox .hotSearch {
+    margin-bottom: 20rpx;
+    float: left;
+    width: 60%;
+    margin-left: 12rpx;
+}
+
+.hotSearch .word {
+    font-size: 35rpx;
+    /*padding-left: 64rpx;*/
+
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hotSearchBox .picUrl {
+    height: 124rpx;
+    width: 250rpx;
+}
+
+.hotSearch .num {
+    color: rgb(153 153 153 / 1);
+    padding-left: 64rpx;
+    /*margin-left: 103rpx;*/
+}
+
+.hotSearchBox .rankTop {
+    float: left;
+    height: 100%;
+    width: 40rpx;
+    background-color: yellow;
+    border-radius: 16rpx;
+    text-align: right;
+}
+
+.hotSearchBox .rank {
+    float: left;
+    height: 100%;
+    width: 40rpx;
+
+    border-radius: 16rpx;
+    text-align: right;
+}
+
+.logo .title {
+    position: relative;
+    top: 23%;
+    text-align: center;
+    margin-bottom: 20px;
+    float: right;
+    font-size: 36rpx;
+}
+
+.searchInput {
+    position: relative;
+    top: 24%;
+    border: 1rpx solid;
+    border-radius: 70rpx;
+    background: #fbfbfb;
+    height: 88rpx;
+    margin: 0rpx 10rpx 30rpx 10rpx;
+
+    /*text-align: center;*/
+    /*align-items: center;*/
+    margin-bottom: 20px;
+}
+
+.searchInput .text {
+    height: 88rpx;
+    margin-left: 34rpx;
+    color: #787878;
+    float: left;
+}
+
+
+.container .searchBox {
+    position: relative;
+    top: 24%;
+}
+
+.img {
+    position: relative;
+    width: 72rpx;
+    float: right;
+    height: 88rpx;
+    margin-right: 33rpx;
+}
+
+
+.navbar {
+    flex: none;
+    display: flex;
+    background: #fff;
+    width: 100%;
+}
+
+.navbar .item {
+    position: relative;
+    flex: auto;
+    text-align: center;
+    line-height: 80rpx;
+    color: #888888;
+}
+
+.navbar .item.active {
+    color: #94070a;
+}
+
+.navbar .item.active:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 40rpx;
+    right: 40rpx;
+    height: 4rpx;
+    background: #94070a;
+}
+
+.placeholder {
+    color: #888888;
+    caret-color: #94070a;
+}
