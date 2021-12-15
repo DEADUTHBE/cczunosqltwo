@@ -1,0 +1,65 @@
+<!--pages/HomePage.wxml-->
+<view class="background">
+
+    <view class="container">
+        <view hidden="{{currentTab!==0}}">
+            <view class="logo">
+                <image class="img" src="../../images/HotSearch/WB_logo.png" mode="aspectFit"></image>
+                <text class="title">微博热搜</text>
+            </view>
+        </view>
+        <view hidden="{{currentTab!==1}}">
+            <view class="logo">
+                <image class="img" src="../../images/HotSearch/Bilibili_iconSelected.png" mode="aspectFit"></image>
+                <text class="title">Bilibili热搜</text>
+            </view>
+        </view>
+        <view hidden="{{currentTab!==2}}">
+            <view class="logo">
+                <image class="img" src="../../images/HotSearch/ZhiHu_iconSelected.png" mode="aspectFit"></image>
+                <text class="title">知乎热搜</text>
+            </view>
+        </view>
+        <!--三大热搜榜子页面切换-->
+        <view class="navbar">
+            <text wx:for="{{hotIndex}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}"
+                  wx:key="unique"
+                  bindtap="navbarTap">{{item}}</text>
+        </view>
+
+
+    </view>
+
+    <view hidden="{{currentTab!==0}}">
+
+        <view class="hotSearchBox" wx:for="{{hotData.weibo}}">
+            <view class="rank">{{item.rank * 1 + 1}}</view>
+            <view class="hotSearch">
+                <view class="word">{{item.word}}</view>
+                <view class="num">热度: {{item.num}}</view>
+            </view>
+        </view>
+    </view>
+
+    <view hidden="{{currentTab!==1}}">
+
+        <view class="hotSearchBox" wx:for="{{hotData.bili}}">
+            <view class="rank">{{item.rank * 1 + 1}}</view>
+            <view class="hotSearch">
+                <view class="word">{{item.title}}</view>
+                <view class="num">热度: {{item.score}}</view>
+            </view>
+        </view>
+    </view>
+
+    <view hidden="{{currentTab!==2}}">
+        <view class="hotSearchBox" wx:for="{{hotData.zhihu}}">
+            <view class="rank">{{item.rank * 1 + 1}}</view>
+            <view class="hotSearch">
+                <view class="word">{{item.word}}</view>
+                <view class="num">热度: {{item.num}}</view>
+            </view>
+        </view>
+    </view>
+
+</view>

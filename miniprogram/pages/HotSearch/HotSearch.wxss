@@ -46,7 +46,7 @@
 
     background: white;
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     border-radius: 20rpx;
 
     padding: 10rpx 0 0 0;
@@ -55,14 +55,25 @@
 
 .hotSearchBox .hotSearch {
     margin-bottom: 20rpx;
+    margin-left: 110rpx;
 }
 
-.hotSearchBox .num {
+.hotSearch .word {
+    font-size: 35rpx
+}
+
+.hotSearch .num {
+    color: rgb(153 153 153 / 1);
+    /*margin-left: 103rpx;*/
+}
+
+.hotSearchBox .rank {
     float: left;
-    margin-right: 29rpx;
     margin-left: 20rpx;
     height: 100%;
-    font-size: 95rpx;
+    width: 79rpx;
+    font-size: 60rpx;
+    text-align: right;
 }
 
 .logo .title {
@@ -107,4 +118,40 @@
     float: right;
     height: 88rpx;
     margin-right: 33rpx;
+}
+
+
+.navbar {
+    flex: none;
+    display: flex;
+    background: #fff;
+    width: 100%;
+}
+
+.navbar .item {
+    position: relative;
+    flex: auto;
+    text-align: center;
+    line-height: 80rpx;
+    color: #888888;
+}
+
+.navbar .item.active {
+    color: #94070a;
+}
+
+.navbar .item.active:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 40rpx;
+    right: 40rpx;
+    height: 4rpx;
+    background: #94070a;
+}
+
+.placeholder {
+    color: #888888;
+    caret-color: #94070a;
 }
