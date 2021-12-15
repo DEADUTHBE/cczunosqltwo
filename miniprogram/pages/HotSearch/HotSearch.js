@@ -7,7 +7,7 @@ Page({
     data: {
         hotData: {},
         pageNum: 1,
-        hotIndex: ["微博热榜", "知乎热榜", "哔哩热榜"],
+        hotIndex: ["微博热榜", "哔哩热榜", "知乎热榜"],
         currentTab: 0
     },
 

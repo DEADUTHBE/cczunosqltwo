@@ -1,26 +1,32 @@
 <!--pages/HomePage.wxml-->
 <view class="background">
     <view class="container">
+        <!--logo部分-->
         <view class="logo">
             <image src="../../images/HomePage/logo.png" mode="aspectFit"></image>
         </view>
+        <!--搜索部分-->
         <view class="searchBox">
             <view class="searchInput">
                 <input bindinput="getInput" placeholder="搜索内容" confirm-type="search" adjust-position="true" type="text"
                        class="text" bindconfirm="doSearch" name="word"></input>
 
-                <view wx:if="{{!hasUserInfo}}">
-                    <image wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="img"
-                           src="../../images/HomePage/searchLogo.svg"></image>
-                    <image wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="img"
-                           src="../../images/HomePage/searchLogo.svg"></image>
-                </view>
-                <view wx:else>
-                    <image bindtap="doSearchFromIcon" class="img" src="../../images/HomePage/searchLogo.svg"></image>
-                </view>
+                <!--                &lt;!&ndash;验证用户登录部分&ndash;&gt;-->
+                <!--                <view wx:if="{{!hasUserInfo}}">-->
+                <!--                    <image wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="img"-->
+                <!--                           src="../../images/HomePage/searchLogo.svg"></image>-->
+                <!--                    <image wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="img"-->
+                <!--                           src="../../images/HomePage/searchLogo.svg"></image>-->
+                <!--                </view>-->
+
+                <!--                <view wx:else>-->
+                <!--                    <image bindtap="doSearchFromIcon" class="img" src="../../images/HomePage/searchLogo.svg"></image>-->
+                <!--                </view>-->
+
+                <image bindtap="doSearchFromIcon" class="img" src="../../images/HomePage/searchLogo.svg"></image>
 
             </view>
-
         </view>
+
     </view>
 </view>

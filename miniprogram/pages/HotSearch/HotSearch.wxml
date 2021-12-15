@@ -26,39 +26,58 @@
                   wx:key="unique"
                   bindtap="navbarTap">{{item}}</text>
         </view>
-
-
     </view>
 
+    <!--热榜内容-->
     <view hidden="{{currentTab!==0}}">
-
         <view class="hotSearchBox" wx:for="{{hotData.weibo}}">
-            <view class="rank">{{item.rank * 1 + 1}}</view>
             <view class="hotSearch">
+                <view class="rankTop" wx:if="{{item.rank < 10}}">{{ item.rank * 1 + 1}}</view>
+                <view class="rank" wx:else>{{item.rank * 1 + 1}}</view>
+                <view class="num">{{item.num}} 热度</view>
                 <view class="word">{{item.word}}</view>
-                <view class="num">热度: {{item.num}}</view>
             </view>
+            <image class="picUrl" lazy-load="true" src="{{item.picUrl}}" mode="aspectFill"></image>
         </view>
     </view>
 
     <view hidden="{{currentTab!==1}}">
-
+        <!--        <view class="hotSearchBox" wx:for="{{hotData.bili}}">-->
+        <!--            <view class="rank">{{item.rank * 1 + 1}}</view>-->
+        <!--            <view class="hotSearch">-->
+        <!--                <view class="word">{{item.word}}</view>-->
+        <!--                <view class="num">热度: {{item.num}}</view>-->
+        <!--            </view>-->
+        <!--        </view>-->
+        <!--    </view>-->
         <view class="hotSearchBox" wx:for="{{hotData.bili}}">
-            <view class="rank">{{item.rank * 1 + 1}}</view>
             <view class="hotSearch">
-                <view class="word">{{item.title}}</view>
-                <view class="num">热度: {{item.score}}</view>
+                <view class="rankTop" wx:if="{{item.rank < 10}}">{{ item.rank * 1 + 1}}</view>
+                <view class="rank" wx:else>{{item.rank * 1 + 1}}</view>
+                <view class="num">{{item.num}} 热度</view>
+                <view class="word">{{item.word}}</view>
             </view>
+            <image class="picUrl" lazy-load="true" src="{{item.picUrl}}" mode="aspectFill"></image>
         </view>
     </view>
 
     <view hidden="{{currentTab!==2}}">
+        <!--        <view class="hotSearchBox" wx:for="{{hotData.zhihu}}">-->
+        <!--            <view class="rank">{{item.rank * 1 + 1}}</view>-->
+        <!--            <view class="hotSearch">-->
+        <!--                <view class="word">{{item.word}}</view>-->
+        <!--                <view class="num">热度: {{item.num}}</view>-->
+        <!--            </view>-->
+        <!--        </view>-->
+        <!--    </view>-->
         <view class="hotSearchBox" wx:for="{{hotData.zhihu}}">
-            <view class="rank">{{item.rank * 1 + 1}}</view>
             <view class="hotSearch">
+                <view class="rankTop" wx:if="{{item.rank < 10}}">{{ item.rank * 1 + 1}}</view>
+                <view class="rank" wx:else>{{item.rank * 1 + 1}}</view>
+                <view class="num">{{item.num}} 热度</view>
                 <view class="word">{{item.word}}</view>
-                <view class="num">热度: {{item.num}}</view>
             </view>
+            <image class="picUrl" lazy-load="true" src="{{item.picUrl}}" mode="aspectFill"></image>
         </view>
     </view>
 

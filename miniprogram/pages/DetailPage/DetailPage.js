@@ -22,7 +22,8 @@ Page({
     },
 
     onLoad: function (word) {
-        this.getData(word.word);
+        // this.getData(word.word);
+        this.getData("计算机");
     },
 
     // 弹出详细页面

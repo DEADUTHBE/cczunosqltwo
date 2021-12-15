@@ -55,24 +55,49 @@
 
 .hotSearchBox .hotSearch {
     margin-bottom: 20rpx;
-    margin-left: 110rpx;
+    float: left;
+    width: 60%;
+    margin-left: 12rpx;
 }
 
 .hotSearch .word {
-    font-size: 35rpx
+    font-size: 35rpx;
+    /*padding-left: 64rpx;*/
+
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hotSearchBox .picUrl {
+    height: 124rpx;
+    width: 250rpx;
 }
 
 .hotSearch .num {
     color: rgb(153 153 153 / 1);
+    padding-left: 64rpx;
     /*margin-left: 103rpx;*/
+}
+
+.hotSearchBox .rankTop {
+    float: left;
+    height: 100%;
+    width: 40rpx;
+    background-color: yellow;
+    border-radius: 16rpx;
+    text-align: right;
 }
 
 .hotSearchBox .rank {
     float: left;
-    margin-left: 20rpx;
     height: 100%;
-    width: 79rpx;
-    font-size: 60rpx;
+    width: 40rpx;
+
+    border-radius: 16rpx;
     text-align: right;
 }
 

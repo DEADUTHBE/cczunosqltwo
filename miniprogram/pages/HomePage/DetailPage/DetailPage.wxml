@@ -2,25 +2,62 @@
 
     <view class="container">
         <view class="logo">
-            <image class="img" src="../../images/HomePage/logo.png" mode="aspectFit"></image>
+            <image class="img" src="../../../images/HomePage/logo.png" mode="aspectFit"></image>
             <text class="title">知者搜索</text>
         </view>
+        <text style="margin-left: 25rpx;color: rgb(150 150 150 / 1);">点击查看详情</text>
     </view>
 
     <view class="searchResult" wx:for="{{usersInfo}}">
-        <view class="avatar">
-            <image src="{{item.avatar_url}}" mode="aspectFit"></image>
-        </view>
-        <view class="textInfo">
-            <view>昵称: {{item.business.name}}</view>
-            <view>描述: {{item.description}}</view>
-            <view>个性签名: {{item.headline}}</view>
-            <view>回答数: {{item.answer_count}}</view>
-            <view>获赞数: {{item.voteup_count}}</view>
-            <view>收到的感谢数: {{item.thanked_count}}</view>
-            <view>粉丝数: {{item.follower_count}}</view>
-            <view>关注数: {{item.following_count}}</view>
-            <view>发布的文章数: {{item.articles_count}}</view>
+        <view bindtap="popup" data-id="{{index}}">
+            <view class="avatar">
+                <image src="{{item.avatar_url}}" mode="aspectFit"></image>
+            </view>
+            <view class="textInfo">
+                <view class="nickName">{{item.business.name}}</view>
+                <view class="signature">{{item.headline}}</view>
+            </view>
         </view>
     </view>
+
 </view>
+
+
+<page-container show="{{show}}" position="center">
+
+    <view class="searchResult">
+        <view bindtap="popup" data-id="{{index}}">
+            <view class="avatar">
+                <image src="{{currentUser.avatar_url}}" mode="aspectFit"></image>
+            </view>
+
+            <!--获赞, 被关注, 关注-->
+            <view class="socialData">
+                <view style="margin-right: 32rpx;">
+                    <view>{{currentUser.voteup_count}}</view>
+                    获赞
+                </view>
+                <view style="margin-right: 32rpx;">
+                    <view>{{currentUser.follower_count}}</view>
+                    粉丝
+                </view>
+                <view style="margin-right:32rpx;">
+                    <view>{{currentUser.following_count}}</view>
+                    关注
+                </view>
+            </view>
+            <view class="pageContainerInfo">
+                <view class="nickName">{{currentUser.business.name}}</view>
+                <view class="signature">{{currentUser.headline}}</view>
+                <view>回答数: {{currentUser.answer_count}}</view>
+                <view>获感谢数: {{currentUser.thanked_count}}</view>
+                <view>文章数: {{currentUser.articles_count}}</view>
+                <view>自我介绍: {{currentUser.description}}</view>
+            </view>
+        </view>
+    </view>
+
+    <view class="detail-page">
+        <button type="primary" bindtap="exit">返回</button>
+    </view>
+</page-container>
