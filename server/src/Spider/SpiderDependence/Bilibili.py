@@ -29,9 +29,9 @@ class BilibiliSpider(Spider):
         for hot in hotSearch:
             hotDict.clear()
             # 热搜词
-            hotDict["title"] = hot["title"]
+            hotDict["word"] = hot["title"]
             # 热度指数
-            hotDict["score"] = hot["score"]
+            hotDict["num"] = hot["score"]
             # 预览文案
             hotDict["text"] = hot["desc"]
             # 预览图url
