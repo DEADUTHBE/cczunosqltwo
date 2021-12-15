@@ -3,9 +3,9 @@ temp
 server/src/Spider/SpiderDependence/SpiderRootClass.py
 server/src/Spider/SpiderDependence/__pycache__
 cloudfunctions
-miniprogram/components
-miniprogram/envList.js
-miniprogram/sitemap.json
+browser/miniprogram/components
+browser/miniprogram/envList.js
+browser/miniprogram/sitemap.json
 .eslintrc.js
 project.config.json
 project.private.config.json

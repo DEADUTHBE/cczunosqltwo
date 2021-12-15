@@ -1,8 +1,4 @@
 Page({
-
-    /**
-     * 页面的初始数据
-     */
     data: {
         usersInfo: {},
         show: false,
@@ -22,8 +18,7 @@ Page({
     },
 
     onLoad: function (word) {
-        // this.getData(word.word);
-        this.getData("计算机");
+        this.getData(word.word);
     },
 
     // 弹出详细页面
