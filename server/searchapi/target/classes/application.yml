@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:123456@121.5.146.33:29000/hotSearch?authSource=admin
